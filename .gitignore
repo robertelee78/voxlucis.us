@@ -1,0 +1,16 @@
+node_modules/
+dist/
+.astro/
+.DS_Store
+.env
+.env.*
+!.env.example
+.swarm/
+.claude-flow/
+.claude/
+agentdb.rvf*
+ruvector.db*
+AGENTS.md
+test-results/
+playwright-report/
+.preview/
