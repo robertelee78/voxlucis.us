@@ -1,0 +1,36 @@
+name: Static website
+
+on:
+  push:
+    branches: [main, 'docs/**', 'feat/**']
+  pull_request:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: website-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+      - run: npm ci
+      - name: Verify the complete static site
+        run: npm run verify
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+      - name: Retain the exact checked website
+        uses: actions/upload-artifact@v4
+        with:
+          name: website-${{ github.sha }}
+          path: dist/
+          if-no-files-found: error
+          retention-days: 14
