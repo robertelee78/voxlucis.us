@@ -1,6 +1,7 @@
 # ADR-001: Automatically skin the Vox user manual
 
-**Status**: Accepted for implementation, 2026-10-04. Not yet implemented or published.
+**Status**: Accepted, 2026-10-04.
+**Execution**: [implementation, acceptance and publication](https://github.com/robertelee78/voxlux.us/issues/2). Decision acceptance is not delivery evidence.
 **Date**: 2026-10-04
 **Deciders**: Robert E. Lee
 **Tags**: documentation, static-site, upstream-content
