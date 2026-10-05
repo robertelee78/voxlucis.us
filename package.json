@@ -15,6 +15,6 @@
     "verify:published": "node scripts/verify-published.mjs",
     "verify": "npm run check && npm run test:installer && npm run build && npm run verify:dist"
   },
-  "dependencies": { "astro": "7.2.3" },
-  "devDependencies": { "@astrojs/check": "0.9.10", "typescript": "6.0.3" }
+  "dependencies": { "astro": "7.2.8", "@astrojs/markdown-satteri": "0.3.6", "satteri": "0.9.5" },
+  "devDependencies": { "@astrojs/check": "0.9.10", "@types/node": "22.20.1", "typescript": "6.0.3" }
 }

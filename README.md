@@ -5,6 +5,14 @@ The visual direction is room-first: a warm-dark app study connects the timeline,
 shared services. Ice blue indicates focus/live state; words and neutral glyphs explain trust.
 HF2Q is not the page-layout template.
 
+## Canonical user manual
+
+The user manual lives once in `robertelee78/vox` under `docs/manual/`. Website builds follow
+Vox `main`, resolve one coherent revision, validate the Markdown, and render it at
+`/docs/manual/` in the site's visual language. No browser fetch or duplicate prose is involved.
+Use `VOX_MANUAL_REF` for a review branch or reproducible build. See [the publication contract](ops/manual.md)
+for input limits, provenance, reader checks and the explicit SSH deployment boundary.
+
 ## Local development
 
 Use Node 22.22.2 (`.nvmrc`), then:

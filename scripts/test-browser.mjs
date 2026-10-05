@@ -8,7 +8,7 @@ const session = process.env.VOX_BROWSER_SESSION ?? `vox-regression-${process.pid
 const cli = (...args) => execFileSync('agent-browser', ['--session', session, ...args], { encoding: 'utf8', timeout: 60000 });
 let socket;
 let count = 0;
-const check = (name, condition) => { assert.ok(condition, name); count++; console.log(`PASS ${name}`); };
+const check = (name, condition) => { assert.ok(condition, `PRODUCT: ${name}`); count++; console.log(`PASS ${name}`); };
 try {
   cli('open', base);
   const endpoint = cli('get', 'cdp-url').trim();
@@ -153,6 +153,54 @@ try {
     }
     check(`${path} has one h1 and a skip target`, await evaluate(`document.querySelectorAll('h1').length === 1 && !!document.querySelector('#content')`));
   }
+
+  // Read the real build, not a fixture manual; navigation and applicability derive upstream.
+  const manualResponse = await fetch(base + '/docs/manual/provenance.json');
+  assert.ok(manualResponse.ok, 'APPARATUS: preview must serve the built manual provenance');
+  const manual = await manualResponse.json();
+  check('manual exposes its source revision and nonempty chapter list', /^[a-f0-9]{40}$/.test(manual.sourceCommit) && manual.pages.length > 0);
+  for (const chapter of manual.pages) {
+    await navigate(chapter.route);
+    check(`${chapter.slug}: reader sees the right chapter, version, source and selected navigation`, await evaluate(`document.querySelectorAll('h1').length === 1 && document.querySelector('h1').textContent === ${JSON.stringify(chapter.title)} && document.querySelector('[data-applicability]').dataset.applicability === ${JSON.stringify(chapter.appliesTo)} && document.querySelector('[data-manual-content]').dataset.sourceCommit === ${JSON.stringify(manual.sourceCommit)} && document.querySelector('[aria-label="Manual chapters"] [aria-current="page"]').getAttribute('href') === ${JSON.stringify(chapter.route)}`));
+    for (const width of [1440, 320]) {
+      await viewport(width);
+      await evaluate(`document.documentElement.style.fontSize = '200%'`);
+      check(`${chapter.slug}: reading reflows at ${width}px with 200% text`, await noOverflow());
+      await evaluate(`document.documentElement.style.fontSize = ''`);
+    }
+  }
+  await navigate('/docs/manual/');
+  await viewport(320);
+  await send('Emulation.setEmulatedMedia', { features: [{ name: 'prefers-reduced-motion', value: 'reduce' }] });
+  await evaluate(`document.querySelector('.manual-read-link').focus()`);
+  cli('press', 'Enter');
+  await waitFor(`location.hash === '#chapter'`);
+  check('mobile keyboard shortcut reaches the chapter before the long navigation', await evaluate(`document.activeElement.id === 'chapter' && document.querySelector('#chapter').getBoundingClientRect().top >= 0 && document.querySelector('#chapter').getBoundingClientRect().top < 120`));
+  const next = manual.pages[1];
+  if (next) {
+    await evaluate(`document.querySelector('.manual-pagination [rel="next"]').focus()`);
+    cli('press', 'Enter');
+    await waitFor(`location.pathname === ${JSON.stringify(next.route)} && document.readyState === 'complete'`);
+    check('keyboard next-chapter navigation reaches the linked instructions', await evaluate(`document.querySelector('h1').textContent === ${JSON.stringify(next.title)}`));
+  }
+  await navigate('/docs/manual/install/');
+  await evaluate(`Object.defineProperty(navigator.clipboard, 'writeText', { configurable: true, value: async text => { window.__copiedManual = text; } })`);
+  await click('.manual-code [data-copy]');
+  await waitFor(`document.querySelector('#copy-status').textContent.includes('copied')`);
+  check('manual copy includes exactly the visible command, without Markdown or line numbers', await evaluate(`window.__copiedManual === document.querySelector('.manual-code pre').textContent && document.querySelector('.manual-code .copy-button span').textContent === 'Copied'`));
+  await evaluate(`Object.defineProperty(navigator.clipboard, 'writeText', { configurable: true, value: async () => { throw new DOMException('Denied', 'NotAllowedError'); } })`);
+  await click('.manual-code [data-copy]');
+  await waitFor(`document.querySelector('#copy-status').textContent.includes('unavailable')`);
+  // Selection.toString() omits the rendered terminal newline; Range preserves the
+  // selected DOM bytes, which must still equal the complete printed example.
+  check('manual denied clipboard leaves selectable printed text', await evaluate(`getSelection().rangeCount === 1 && getSelection().getRangeAt(0).toString() === document.querySelector('.manual-code pre').textContent && document.querySelector('.manual-code .copy-button span').textContent === 'Select text'`));
+  await send('Emulation.setEmulatedMedia', { media: 'print' });
+  check('printed manual retains prose while removing navigation and copy controls', await evaluate(`getComputedStyle(document.querySelector('.manual-sidebar')).display === 'none' && getComputedStyle(document.querySelector('.manual-code .copy-button')).display === 'none' && getComputedStyle(document.querySelector('[data-manual-content]')).display !== 'none'`));
+  await send('Emulation.setEmulatedMedia', { media: '', features: [{ name: 'prefers-reduced-motion', value: 'reduce' }] });
+  await navigate('/docs/getting-started/');
+  for (const anchor of ['install', 'identity', 'first-room', 'trust', 'anchors', 'tunnels', 'agents', 'updates']) {
+    check(`legacy bookmark #${anchor} leads to canonical instructions`, await evaluate(`document.querySelector(${JSON.stringify('#' + anchor + ' a')})?.getAttribute('href').startsWith('/docs/manual/')`));
+  }
   await navigate();
   await send('Emulation.setEmulatedMedia', { features: [{ name: 'prefers-reduced-motion', value: 'reduce' }] });
   check('reduced motion disables smooth scrolling', await evaluate(`getComputedStyle(document.documentElement).scrollBehavior === 'auto'`));
@@ -170,6 +218,13 @@ try {
   await waitFor(`location.pathname === '/agents/' && document.readyState === 'complete'`);
   await evaluate(`document.querySelector('.agent-setup summary').click()`);
   check('agent setup remains readable without JavaScript', await evaluate(`document.querySelector('.agent-setup').open && document.querySelector('.agent-setup pre').textContent.includes('--node claude-mbp') && document.querySelector('.agent-setup [data-copy]').hidden`));
+  await send('Page.navigate', { url: base + '/docs/manual/install/' });
+  await waitFor(`location.pathname === '/docs/manual/install/' && document.readyState === 'complete'`);
+  check('manual reading and all chapter navigation work without JavaScript', await evaluate(`!!document.querySelector('h1') && document.querySelectorAll('[aria-label="Manual chapters"] a').length === ${manual.pages.length} && getComputedStyle(document.querySelector('[data-manual-content]')).display !== 'none' && [...document.querySelectorAll('.manual-code [data-copy]')].every(button => button.hidden)`));
+  await evaluate(`document.querySelector('.manual-pagination [rel="next"]').focus()`);
+  cli('press', 'Enter');
+  await waitFor(`location.pathname !== '/docs/manual/install/' && document.readyState === 'complete'`);
+  check('no-JS keyboard navigation reaches the next full chapter', await evaluate(`!!document.querySelector('[data-manual-content] h1') && document.querySelectorAll('[data-manual-content] p').length > 0`));
   await send('Emulation.setScriptExecutionDisabled', { value: false });
   console.log(`Browser regression: ${count} checks passed; zero skipped.`);
 } finally {

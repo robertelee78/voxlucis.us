@@ -1,0 +1,32 @@
+---
+import { getCollection, render, type CollectionEntry } from 'astro:content';
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import { applicability } from '../../../loaders/manual-policy';
+import '../../../styles/manual.css';
+
+export async function getStaticPaths() {
+  const pages = (await getCollection('manual')).sort((a, b) => a.data.order - b.data.order);
+  return pages.map((page, index) => ({ params: { slug: page.id === 'index' ? undefined : page.id }, props: { page, pages, previous: pages[index - 1], next: pages[index + 1] } }));
+}
+interface Props { page: CollectionEntry<'manual'>; pages: CollectionEntry<'manual'>[]; previous?: CollectionEntry<'manual'>; next?: CollectionEntry<'manual'>; }
+const { page, pages, previous, next } = Astro.props;
+const { Content, headings } = await render(page);
+const sections = headings.filter(heading => heading.depth === 2 || heading.depth === 3);
+---
+<BaseLayout title={`${page.data.title} — Vox manual`} description={page.data.description} path={page.data.route} skipTarget="chapter">
+  <div class="manual-heading">
+    <nav class="manual-breadcrumb" aria-label="Breadcrumb"><a href="/">Vox Lux</a><span aria-hidden="true">/</span><a href="/docs/manual/">User manual</a>{page.id !== 'index' && <><span aria-hidden="true">/</span><span aria-current="page">{page.data.title}</span></>}</nav>
+    <div class="manual-heading-row"><p class="eyebrow"><span>THE VOX MANUAL</span> ONE SOURCE. YOUR NEXT STEP.</p><span class:list={['manual-version', { 'is-development': page.data.appliesTo === 'development' }]} data-applicability={page.data.appliesTo}>{applicability(page.data.appliesTo)}</span></div>
+    <a class="manual-read-link" href="#chapter">Read this chapter <span aria-hidden="true">↓</span></a>
+  </div>
+  <div class="manual-layout">
+    <aside class="manual-sidebar"><nav aria-label="Manual chapters"><p class="manual-nav-title">IN THIS MANUAL <span>{String(pages.length).padStart(2, '0')}</span></p><ol>{pages.map((item, index) => <li><a href={item.data.route} aria-current={item.id === page.id ? 'page' : undefined}><span aria-hidden="true">{String(index + 1).padStart(2, '0')}</span><span>{item.data.title}</span>{item.data.appliesTo === 'development' && <small>DEV</small>}</a></li>)}</ol></nav><a class="manual-source-link" href={page.data.sourceUrl}>Read this chapter on GitHub <span aria-hidden="true">↗</span></a></aside>
+    <div class="manual-main">
+      {page.data.appliesTo === 'development' && <p class="manual-development-notice"><strong>Development instructions.</strong> These commands are not the installed release. Check the source and version before following them.</p>}
+      <article id="chapter" tabindex="-1" class="manual-prose" data-manual-content data-source-commit={page.data.sourceCommit} data-source-sha256={page.data.sourceSha256}><Content /></article>
+      <nav class="manual-pagination" aria-label="Adjacent chapters">{previous ? <a rel="prev" href={previous.data.route}><span>← PREVIOUS</span><strong>{previous.data.title}</strong></a> : <span />}{next && <a rel="next" href={next.data.route}><span>NEXT →</span><strong>{next.data.title}</strong></a>}</nav>
+      <aside class="manual-provenance" aria-label="Chapter source"><p>Written once in Vox. Styled here at build time.</p><a href={page.data.sourceUrl}>vox@{page.data.sourceCommit.slice(0, 12)} · {page.data.path}</a><p>Source ref: <code>{page.data.sourceRef}</code> · revision dated <time datetime={page.data.sourceUpdatedAt}>{page.data.sourceUpdatedAt.slice(0, 10)}</time></p><details><summary>Content fingerprint</summary><p>SHA-256 of the original Markdown</p><code>{page.data.sourceSha256}</code><p><a href="/docs/manual/provenance.json">Complete build provenance</a></p></details></aside>
+    </div>
+    {sections.length > 0 && <nav class="manual-toc" aria-label="On this page"><p class="manual-nav-title">ON THIS PAGE</p><ol>{sections.map(section => <li class:list={{ 'is-subsection': section.depth === 3 }}><a href={`#${section.slug}`}>{section.text}</a></li>)}</ol></nav>}
+  </div>
+</BaseLayout>
