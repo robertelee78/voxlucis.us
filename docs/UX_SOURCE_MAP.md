@@ -4,7 +4,9 @@ Reviewed 2026-10-04. Product direction: Vox release milestone 2 (v0.3.0).
 Implementation reference: `rearch/v030` at `2d8385d4f90891c96843f32d6d002bc1b69aac1e`.
 GitHub reads for Vox must authenticate as `robertelee78`, scoped to the command rather than switching the global account.
 
-The website does not change Vox, its ADRs, or the twenty decisions left open by the supplied UX research.
+The product-design study does not decide the twenty questions left open by the supplied UX
+research. The later canonical-manual work is separately governed by Vox ADR-027 and this
+repository's ADR-001, as described below.
 
 ## Evidence hierarchy
 
@@ -83,3 +85,18 @@ page retains the older profile-based boundary. The conversation is illustrative,
 uses `robertGPT`, and does not simulate an actual claim, agent run or result.
 Encryption is not described as isolating content from the connected model/provider.
 No live-model or two-machine test is claimed by website verification.
+
+## Canonical manual — published 2026-10-05 UTC
+
+The fixed implementation reference above applies to the design study and agent overview;
+it is **not** the manual's content selector. `/docs/manual/` is rendered from canonical
+`vox/docs/manual` files on current Vox `main`, resolved once per build. There are no copied
+chapters or maintained manual SHA in this repository. The earlier five-page acceptance and
+getting-started descriptions above record the preceding website iteration.
+
+The manual publication adds 13 chapters (18 HTML pages total), labels released v0.2.10 and
+development instructions separately, and preserves getting-started bookmarks as a task map.
+This work did add documentation and an ADR to Vox, plus its README vanity-installer link;
+it made no Vox runtime change. See [manual operations](../ops/manual.md) and the
+[exact deployment receipt](../ops/deployments/2026-10-05-manual.md) for source ownership,
+scoped real-binary evidence, browser acceptance and public-byte verification.
