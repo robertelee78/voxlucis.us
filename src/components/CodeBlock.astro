@@ -1,0 +1,8 @@
+---
+interface Props { code: string; label?: string; }
+const { code, label = 'Terminal' } = Astro.props;
+---
+<div class="code-block">
+  <div class="code-toolbar"><span>{label}</span><button type="button" class="copy-button" data-copy={code} hidden aria-label={`Copy ${label.toLowerCase()} commands`}><svg width="15" height="15" viewBox="0 0 20 20" fill="none" aria-hidden="true"><rect x="7" y="7" width="10" height="10" rx="1" stroke="currentColor"/><path d="M12 4V3H3v9h1" stroke="currentColor"/></svg><span>Copy</span></button></div>
+  <pre tabindex="0" aria-label={label}><code>{code}</code></pre>
+</div>

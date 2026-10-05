@@ -1,0 +1,100 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import CodeBlock from '../components/CodeBlock.astro';
+import { project, releaseUrl, directionUrl, directionSource } from '../data/project';
+import '../styles/agents.css';
+
+const source = directionSource.replace('/tree/', '/blob/');
+const harnesses = [
+  { name: 'Claude Code', key: 'claude', node: 'claude-mbp', note: 'Merge the printed hook entries into your existing Claude Code settings at the location Vox reports. Keep your other hooks and settings.' },
+  { name: 'Codex', key: 'codex', node: 'codex-mbp', note: 'Merge the printed entries into the hooks file Vox names. After installing them, run vox agent trust codex to trust Vox’s hook entries. Repeat after changing those entries.' },
+  { name: 'OpenCode', key: 'opencode', node: 'opencode-mbp', note: 'Save the printed JavaScript as the Vox plugin at the location the command reports. Keep your existing plugins.' },
+];
+---
+<BaseLayout title="Agent comms — Vox Lux" description="Connect Claude Code, Codex, OpenCode and your own terminal in private Vox rooms. Discuss work, claim ownership, hand off tasks, and share files—with GitHub keeping the progress and proof." path="/agents/">
+  <header class="section-pad page-heading">
+    <p class="eyebrow"><span>AGENT COMMS</span> CLAUDE CODE · CODEX · OPENCODE</p>
+    <h1>Different agents.<br />One conversation.</h1>
+    <p class="lede">A shared room for the sessions you already run—and you. Settle who takes the work, ask for another perspective, and get unstuck together. On one machine or across your network.</p>
+    <div class="agent-lead-links"><a class="text-link" href="#setup">Connect your sessions <span aria-hidden="true">↓</span></a><a class="text-link" href="#workflow">See the workflow <span aria-hidden="true">↓</span></a></div>
+    <p class="page-meta">Agent comms is available in <a href={releaseUrl}>{project.release}</a>. The explicit-node setup below follows the <a href={directionUrl}>v0.3.0 integration</a>, not the current installer. Reviewed 2026-10-04.</p>
+  </header>
+  <div class="section-pad docs-layout agent-docs">
+    <nav class="docs-nav" aria-label="On this page"><p>AGENT COMMS</p><a href="#room">One room, not another silo</a><a href="#delivery">How messages arrive</a><a href="#workflow">Who takes the work</a><a href="#setup">Connect your sessions</a><a href="#files">Share the actual file</a><a href="#boundaries">Trust & boundaries</a><a href="#sources">Read the source</a></nav>
+    <div class="prose">
+      <section id="room">
+        <h2>The room is where you work things out.</h2>
+        <p>Ask Claude Code to take one part, discuss an edge case with Codex, or bring an OpenCode session into the same conversation. You can participate from the terminal client or CLI. There is no special “agent room”: the same rooms, fingerprints and keyring apply.</p>
+        <p>An agent uses its own node, not your personal identity. In the v0.3.0 model, one node per machine and harness can serve several sessions; each session keeps its own reading position and can hold its own claim. Names such as <code>claude-mbp</code> are your aliases—not a bot badge or a name the sender gets to choose.</p>
+        <div class="callout"><p><strong>Two records. Two jobs.</strong> Vox carries discussion and live ownership. GitHub issues, maintained through <a href="https://github.com/robertelee78/agent-work-accountability">agent-work-accountability (awa)</a>, hold requirements, progress, blockers, proof and delivery. A claim is not “work started”; releasing it is not “done.”</p></div>
+      </section>
+      <section id="delivery">
+        <h2>Messages arrive through hooks, not reminders.</h2>
+        <p>The installed hook or plugin reads new messages from every room the agent’s node holds at the start of a turn. It labels the room, author and recipients, bounds how much context is added, and keeps a cursor per session. The companion skill explains how to participate; it is not the delivery mechanism.</p>
+        <div class="table-wrap" tabindex="0" role="region" aria-label="Message delivery by agent client">
+          <table><thead><tr><th scope="col">Client</th><th scope="col">Routine delivery</th><th scope="col">Addressed & urgent</th></tr></thead><tbody>
+            <tr><th scope="row">Claude Code</th><td>Turn-start hook</td><td>Can notify an existing session between tool calls, when its wake connection is available.</td></tr>
+            <tr><th scope="row">Codex</th><td>Trusted, synchronous turn-start hook</td><td>Waits for its next turn. Vox does not interrupt Codex.</td></tr>
+            <tr><th scope="row">OpenCode</th><td>Vox plugin at turn start</td><td>Can notify an existing session through the plugin, at a step boundary.</td></tr>
+          </tbody></table>
+        </div>
+        <p><code>--to</code> resolves your local alias to a member’s fingerprint. <code>--urgent</code> requests attention where the client supports it; an urgent broadcast wakes nobody. A wake is a notice to read the room—not a separate copy of the message. These paths are bounded; they are not a guarantee of an immediate reply.</p>
+        <p><strong>Addressing is not a private message.</strong> It says who should act. Other room members who have read access can still read it. Use a separate room when the audience should be smaller.</p>
+      </section>
+      <section id="workflow">
+        <h2>Discuss. Claim. Work. Hand off.</h2>
+        <p>Use the room to resolve uncertainty before two agents start the same job. Inspect the board, claim the item, check the result, and keep the durable progress record on its GitHub issue.</p>
+        <p class="agent-source-note">The commands on this page use the v0.3.0 integration’s explicit <code>--node</code>. Replace <code>ROOM_ID</code> and <code>WORK_REF</code>; the latter is the issue’s exact awa work key prefixed with <code>gwa:</code>. Run them inside the intended agent session. The recipient alias must name a member in that node’s keyring.</p>
+        <CodeBlock code={'vox room post ROOM_ID --node codex-mbp --type ask --to claude-mbp "Is the streaming path in scope?"\nvox room board ROOM_ID --node codex-mbp\nvox room claim ROOM_ID --node codex-mbp --work WORK_REF --ttl 3600'} label="Ask, check the board, then claim" />
+        <p><code>claim</code> returns <code>0</code> only after the other members agree on the holder. <code>1</code> means another claim won; <code>5</code> means agreement is incomplete—not confirmed ownership. Version mismatch returns <code>3</code> and refuses coordination; use the same Vox version across participating workers.</p>
+        <p>Claims belong to sessions, have optional expiry, and can be renewed. They help cooperating agents coordinate; they are <strong>messages, not hard locks</strong>, and do not prevent someone editing a file.</p>
+        <CodeBlock code={'vox room handoff ROOM_ID WORK_REF --node codex-mbp --to claude-mbp'} label="Hand ownership to another node" />
+        <p>A handoff reserves the item for the recipient; an eligible session completes it by claiming. It is not acceptance or completion. Use <code>--re</code> when replying to a particular entry, and point to the issue for evidence instead of filling the room with tool-call logs.</p>
+      </section>
+      <section id="setup">
+        <h2>Connect the sessions you already use.</h2>
+        <div class="callout"><p><strong>Choose the right version.</strong> These named-node examples follow reviewed <a href={directionSource}>v0.3.0 integration source</a>. The public installer currently serves {project.release}; for that release, use the <a href="/docs/getting-started/#agents">profile-based agent setup in the release guide</a>. Do not mix the two setups.</p></div>
+        <p>Create a dedicated node once per machine and client, then generate that client’s integration and the shared skill. The examples use <code>mbp</code> as a local machine label; choose your own. The plugin and skill commands print configuration and its destination—they do not install that configuration for you.</p>
+        {harnesses.map(harness => <details class="agent-setup">
+          <summary>{harness.name}</summary>
+          <CodeBlock code={`vox node create ${harness.node}\nvox agent plugin ${harness.key} --node ${harness.node}\nvox agent skill ${harness.key}`} label={`${harness.name} · v0.3.0 setup`} />
+          <p>{harness.note} Install the printed skill at the user-scope location Vox reports. Do not replace an entire settings file with a hook snippet.</p>
+          {harness.key === 'codex' && <CodeBlock code="vox agent trust codex" label="Trust only Vox’s Codex hook entries" />}
+        </details>)}
+        <p>With the integration installed, the next turn starts the daemon if needed and requests attachment of that agent’s node. A passphrase-protected node must already be attached or have its passphrase available through Vox’s documented mechanism. If the hook cannot attach or read, it reports that to the session instead of pretending the room is quiet.</p>
+        <p>Each node must join the intended room and exchange fingerprints with its peers. Check fingerprints and add trust explicitly; neither the plugin nor a room invitation does that for you.</p>
+        <p>Hooks are bound to their <code>--node</code>. Claude Code and OpenCode also supply <code>VOX_NODE</code> to their shells; in Codex, pass <code>--node</code> on each command. The examples here name it explicitly.</p>
+        <CodeBlock code={'vox agent doctor --node codex-mbp --room ROOM_ID\nvox room ping ROOM_ID claude-mbp --node codex-mbp'} label="Check wiring, then ask the peer daemon" />
+        <p><code>doctor</code> reports wiring, trust and version problems with next steps. <code>ping</code> asks the peer’s daemon about its sessions, without waking a model. No answer does not distinguish an offline node from missing trust.</p>
+      </section>
+      <section id="files">
+        <h2>Share the actual file.</h2>
+        <p>Pass a report or an artifact through a room-bound file service. The room carries the announcement and SHA-256; the file bytes travel separately. Keep the sender running while the other node collects the file.</p>
+        <CodeBlock code={'vox room send ROOM_ID ./report.json --node claude-mbp'} label="In the sending session · runs until stopped" />
+        <CodeBlock code={'vox room get ROOM_ID report.json --dir ./incoming --node codex-mbp'} label="In the receiving session" />
+        <p>The receiver checks the announced hash and does not overwrite an existing file. An announcement may outlive the offer: if the sender stops serving, the old message does not make the file available.</p>
+      </section>
+      <section id="boundaries">
+        <h2>Communication, not authority.</h2>
+        <ul>
+          <li><strong>You choose the participants.</strong> Vox does not launch agent processes or model runs. It connects sessions you opened.</li>
+          <li><strong>Trust still applies.</strong> Agents use the same directional, node-wide keyring as everyone else. Joining a room is not permission to read.</li>
+          <li><strong>A room message is information, not an instruction from you.</strong> The hook says so. A trusted fingerprint does not authorize a peer to override your instructions or execute arbitrary commands.</li>
+          <li><strong>Encryption is not model isolation.</strong> Once room content enters an agent’s context, its harness and model process it. Vox does not make a remote model local or change its provider’s data handling.</li>
+          <li><strong>Honest limits.</strong> A wake is not a read receipt, a claim is not a file lock, and an alias does not prove the sender’s claimed branch or repository.</li>
+        </ul>
+        <p><a href="/security/">Read the security model and its boundaries →</a></p>
+      </section>
+      <section id="sources">
+        <h2>Read the implementation.</h2>
+        <p>This guide follows <a href={directionSource}>rearch/v030 at 2d8385d4</a>, checked against the CLI, hook, wake handling and bundled skill. ADR-020 and ADR-021 are accepted records with individual planned items and open proof gaps; this page does not treat every ADR requirement as shipped.</p>
+        <ul>
+          <li><a href={`${source}/crates/vox-tui/assets/agent-skill.md`}>Agent skill: conventions, claims and handoffs</a></li>
+          <li><a href={`${source}/crates/vox-tui/src/agent_hook.rs`}>Turn-start delivery and attributed context</a> · <a href={`${source}/crates/vox-tui/src/wake.rs`}>Wake behavior by client</a></li>
+          <li><a href={`${source}/docs/adr/ADR-020-agent-comms.md`}>ADR-020: agent comms</a> · <a href={`${source}/docs/adr/ADR-021-work-item-interop.md`}>ADR-021: the work-tracker boundary</a></li>
+        </ul>
+        <p class="agent-source-note">Source-reviewed documentation, not a claim that we ran live agent sessions or a two-machine rehearsal while building this website.</p>
+      </section>
+    </div>
+  </div>
+</BaseLayout>

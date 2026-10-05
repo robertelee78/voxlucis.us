@@ -1,0 +1,45 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Experience from '../components/Experience.astro';
+import AgentComms from '../components/AgentComms.astro';
+import CodeBlock from '../components/CodeBlock.astro';
+import { project, installCommand, installerSourceUrl, sourceCommand, releaseUrl, directionUrl } from '../data/project';
+import '../styles/experience.css';
+import '../styles/agents.css';
+---
+<BaseLayout title="Vox Lux — Your people. Your tools. One room." description="Private rooms for conversation, files, and shared services. Your identities, your keyring, your network. Explore Vox’s app direction and get the open-source terminal client.">
+  <section class="product-hero" aria-labelledby="hero-title">
+    <p class="eyebrow">VOX LUX / PRIVATE, PEER TO PEER</p>
+    <h1 id="hero-title">Your people. Your tools.<br /><span>One room.</span></h1>
+    <p class="product-lede">The conversation, the keys, and the things you share.<br class="wide-only" /> Together in a network that belongs to its members.</p>
+    <div class="hero-actions"><a class="button button-primary" href="#experience">Explore the experience <span aria-hidden="true">↓</span></a><a class="button button-secondary" href="#install">Get the terminal client <span aria-hidden="true">↗</span></a></div>
+    <p class="hero-footnote">No account. No directory. No central messaging server.<br /><a href="/agents/">A shared room for your agents, too ↗</a></p>
+  </section>
+
+  <section id="experience" class="experience-section" aria-labelledby="experience-title">
+    <div class="experience-intro"><div><p class="eyebrow">THE APP DIRECTION</p><h2 id="experience-title">One place. One model.</h2></div><p>A room, the nodes you trust,<br class="wide-only" /> and the services they share with you.</p></div>
+    <p class="study-disclaimer"><strong>Interactive design study.</strong> Illustrative data, not a released macOS app or a live Vox connection.</p>
+    <Experience />
+    <div class="study-caption"><p>Room → keyring → service. The proposed interface follows the v0.3.0 model; this website does not change your keys, share files, or open connections.</p><a href={directionUrl}>Follow v0.3.0 <span aria-hidden="true">↗</span></a></div>
+  </section>
+
+  <AgentComms />
+
+  <section id="model" class="model-section section-pad" aria-labelledby="model-title">
+    <div class="model-intro"><p class="eyebrow">FEWER CONCEPTS. MORE CLARITY.</p><h2 id="model-title">Everything starts<br />with a room.</h2><p>A project, a household, a conversation between two people. A room brings nodes together. Your keyring determines what you share with them.</p><a class="text-link" href="/security/#consent">Understand the trust model <span aria-hidden="true">↗</span></a></div>
+    <dl class="model-definitions">
+      <div><dt><span aria-hidden="true">▤</span> Room</dt><dd>A shared space that lives on its members’ nodes. Conversation and services stay in context. Joining is not the same as being trusted.</dd></div>
+      <div><dt><span aria-hidden="true">◇</span> Node</dt><dd>An identity with its own keys, rooms, and keyring. Several nodes can run together through one daemon. A person and an agent each act as their own node.</dd></div>
+      <div><dt><span aria-hidden="true">⇄</span> Keyring</dt><dd>The nodes you choose to trust, under names you choose. Trust applies across the rooms you share, now and later. Each side makes its own decision.</dd></div>
+      <div><dt><span aria-hidden="true">↗</span> Service</dt><dd>Something a node makes reachable in a room: SSH, a local web app, a file transfer. Access depends on the host’s trust and shared room membership.</dd></div>
+    </dl>
+  </section>
+
+  <section class="principles-section section-pad" aria-labelledby="principles-title">
+    <div><p class="eyebrow">THE INTERFACE SHOULD TELL THE TRUTH.</p><h2 id="principles-title">Quiet by default.<br />Explicit where it matters.</h2></div>
+    <div class="principles-list"><article><h3>Your names. Not claimed names.</h3><p>“ann” is your alias for a fingerprint. An unknown node stays a fingerprint. A message saying “it’s Ann” never becomes an identity.</p></article><article><h3>Connection is not a read receipt.</h3><p>Connected peers are connected peers. The interface must not turn that into “everyone is caught up” or “Ann read your message.”</p></article><article><h3>Consequences before actions.</h3><p>Removing trust cuts future access, including live service sessions. It cannot take back something already read or copied. The interface should say both.</p></article></div>
+  </section>
+
+  <section id="install" class="section-pad install-section" aria-labelledby="install-title"><div class="install-copy"><p class="eyebrow">AVAILABLE NOW · {project.release}</p><h2 id="install-title">The terminal<br />is a first-class home.</h2><p>The native app is a direction, not a download. Vox’s open-source terminal client is available today for macOS and Linux.</p><p class="release-boundary">This guide covers {project.release}. The installer gets the latest stable binary from GitHub. The experience above looks ahead to v0.3.0 and the app UX—not a screenshot of this release.</p><a class="text-link" href="/docs/getting-started/">Start with the release guide <span aria-hidden="true">↗</span></a></div><div class="install-panel"><div class="install-heading"><span>VOX / TERMINAL</span><a href={releaseUrl}>{project.release} ↗</a></div><CodeBlock code={installCommand} label="macOS + Linux" /><p class="install-note">Apple Silicon & Intel macOS · x86_64 Linux<br />MIT licensed. No account to create.</p><p class="install-note">Short address. Original GitHub installer. No mirror.</p><div class="install-links"><a href={installerSourceUrl}>Inspect installer</a><a href={releaseUrl}>Release assets</a></div><details class="source-install"><summary>Build from source</summary><p>Uses the release’s pinned Rust toolchain.</p><CodeBlock code={sourceCommand} label="Build from source" /></details></div></section>
+  <div class="source-note"><p>Built in the open. Boundaries included.</p><a href="/security/">Security & limitations ↗</a><a href={project.repository}>Explore the source ↗</a></div>
+</BaseLayout>
