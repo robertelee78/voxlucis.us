@@ -1,4 +1,4 @@
-# Vox Lux website
+# Vox Lucis website
 
 Static Astro product and documentation site for [Vox](https://github.com/robertelee78/vox).
 The visual direction is room-first: a warm-dark app study connects the timeline, keyring, and

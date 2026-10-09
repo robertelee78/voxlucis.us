@@ -3,7 +3,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import { project, releaseUrl, directionUrl, directionSource } from '../data/project';
 const adr = (name: string) => `${directionSource.replace('/tree/', '/blob/')}/docs/adr/${name}.md`;
 ---
-<BaseLayout title="Trust & boundaries — Vox Lux" description="Rooms, fingerprints, directional keyring trust, and service access in Vox v0.4.0. Explicit about what encryption can—and cannot—protect." path="/security/">
+<BaseLayout title="Trust & boundaries — Vox Lucis" description="Rooms, fingerprints, directional keyring trust, and service access in Vox v0.4.0. Explicit about what encryption can—and cannot—protect." path="/security/">
   <header class="section-pad page-heading"><p class="eyebrow">TRUST & BOUNDARIES</p><h1>Know what you share.<br /><em>And with whom.</em></h1><p class="lede">One keyring connects the conversation to the services in a room. Trust is your decision, not a badge supplied by someone else.</p><p class="page-meta">{project.release} · <a href={directionUrl}>Release milestone</a> · <a href={directionSource}>Reviewed source</a> · <a href={releaseUrl}>Release notes</a></p></header>
   <div class="section-pad docs-layout">
     <nav class="docs-nav" aria-label="Security topics"><p>THE TRUST MODEL</p><a href="#consent">Keyring & direction</a><a href="#services">Service access</a><a href="#cryptography">Hybrid cryptography</a><a href="#infrastructure">Infrastructure</a><a href="#boundaries">What it cannot protect</a><a href="#status">Release boundaries</a></nav>

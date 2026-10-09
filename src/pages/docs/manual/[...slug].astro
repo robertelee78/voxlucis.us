@@ -15,7 +15,7 @@ const sections = headings.filter(heading => heading.depth === 2 || heading.depth
 ---
 <BaseLayout title={`${page.data.title} — Vox manual`} description={page.data.description} path={page.data.route} skipTarget="chapter">
   <div class="manual-heading">
-    <nav class="manual-breadcrumb" aria-label="Breadcrumb"><a href="/">Vox Lux</a><span aria-hidden="true">/</span><a href="/docs/manual/">User manual</a>{page.id !== 'index' && <><span aria-hidden="true">/</span><span aria-current="page">{page.data.title}</span></>}</nav>
+    <nav class="manual-breadcrumb" aria-label="Breadcrumb"><a href="/">Vox Lucis</a><span aria-hidden="true">/</span><a href="/docs/manual/">User manual</a>{page.id !== 'index' && <><span aria-hidden="true">/</span><span aria-current="page">{page.data.title}</span></>}</nav>
     <div class="manual-heading-row"><p class="eyebrow"><span>THE VOX MANUAL</span> ONE SOURCE. YOUR NEXT STEP.</p><span class:list={['manual-version', { 'is-development': page.data.appliesTo === 'development' }]} data-applicability={page.data.appliesTo}>{applicability(page.data.appliesTo)}</span></div>
     <a class="manual-read-link" href="#chapter">Read this chapter <span aria-hidden="true">↓</span></a>
   </div>

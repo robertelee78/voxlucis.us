@@ -17,7 +17,7 @@ const canonical = new URL(path, project.site);
     <link rel="canonical" href={canonical} />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta property="og:type" content="website" />
-    <meta property="og:site_name" content="Vox Lux" />
+    <meta property="og:site_name" content="Vox Lucis" />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical} />
@@ -28,7 +28,7 @@ const canonical = new URL(path, project.site);
     <a class="skip-link" href={`#${skipTarget}`}>Skip to content</a>
     <div class="site-shell">
       <header class="site-header">
-        <a href="/" class="home-link" aria-label="Vox Lux home"><Logo /></a>
+        <a href="/" class="home-link" aria-label="Vox Lucis home"><Logo /></a>
         <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="primary-nav" hidden>Menu <span aria-hidden="true">+</span></button>
         <nav id="primary-nav" aria-label="Main navigation">
           <a href="/#experience">Experience</a>
@@ -40,7 +40,7 @@ const canonical = new URL(path, project.site);
       </header>
       <main id="content" tabindex="-1"><slot /></main>
       <footer class="site-footer">
-        <div><a href="/" class="home-link" aria-label="Vox Lux home"><Logo /></a><p>Your rooms. Your keyring. Your network.</p></div>
+        <div><a href="/" class="home-link" aria-label="Vox Lucis home"><Logo /></a><p>Your rooms. Your keyring. Your network.</p></div>
         <nav aria-label="Footer navigation"><a href="/agents/">Agent comms</a><a href="/docs/manual/">User manual</a><a href="/security/">Security model</a><a href={releaseUrl}>Releases</a><a href={`${project.repository}/blob/${project.release}/LICENSE`}>MIT license</a></nav>
         <div class="footer-bottom"><span>Independent by design. Open source by choice.</span><span>© {new Date().getUTCFullYear()} Robert E. Lee</span></div>
       </footer>

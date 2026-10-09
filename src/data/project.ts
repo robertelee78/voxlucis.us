@@ -1,6 +1,6 @@
 // Reviewed against the published release and its source, not the older README alone.
 export const project = {
-  name: 'Vox Lux',
+  name: 'Vox Lucis',
   repository: 'https://github.com/robertelee78/vox',
   release: 'v0.4.0',
   reviewed: '2026-10-08',
