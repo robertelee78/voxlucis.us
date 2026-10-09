@@ -10,11 +10,15 @@ and binaries. No release record or binary is hosted by this site.
 
 ## Reviewed installer
 
-- Release: `v0.2.10`, checked 2026-10-04 using GitHub account `robertelee78`.
-- Asset: https://github.com/robertelee78/vox/releases/download/v0.2.10/install.sh
-- Size: 10,530 bytes.
+- Release: `v0.4.0`, checked 2026-10-08 using GitHub account `robertelee78`.
+- Asset: https://github.com/robertelee78/vox/releases/download/v0.4.0/install.sh
+- Size: 22,926 bytes.
 - GitHub release-asset SHA-256:
-  `aed781b8c04b03c26475e2143ccc0b49e8cef7acbec85c9bc6c1b211ebd641c2`.
+  `8fb2a596b727dfb357e4a979feaee5dbf8fdaa6584e4190279989e8aa8113e71`.
+- From v0.4.0 the script installs `Vox.app` with `vox` inside it on Apple Silicon Macs on
+  macOS 13 or later, and refuses any other Mac before downloading; on x86_64 Linux it installs
+  `vox` as before. The vhost in `ops/apache/voxlux.us.conf` selects this asset; the live
+  server still serves the previous selector until the vhost is published.
 
 The script version is pinned, **not the installed binary version**. The unchanged
 upstream script resolves GitHub's latest stable per-platform release record, then

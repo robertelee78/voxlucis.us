@@ -69,13 +69,13 @@ for (const page of manual.pages) {
   for (const chapter of manual.pages) assert.ok(html.includes(`href="${chapter.route}"`), `PRODUCT: ${page.slug} can navigate to ${chapter.slug}`);
 }
 const compatibility = await readFile(path.join(root, 'docs/getting-started/index.html'), 'utf8');
-for (const anchor of ['install', 'identity', 'first-room', 'trust', 'anchors', 'tunnels', 'agents', 'updates']) assert.ok(compatibility.includes(`id="${anchor}"`), `PRODUCT: existing bookmark #${anchor} survives`);
+for (const anchor of ['install', 'app', 'identity', 'first-room', 'trust', 'anchors', 'tunnels', 'agents', 'sessions', 'updates']) assert.ok(compatibility.includes(`id="${anchor}"`), `PRODUCT: existing bookmark #${anchor} survives`);
 for (const panel of ['room', 'keyring', 'services']) {
   assert.ok(home.includes(`id="view-${panel}"`), `app study includes ${panel}`);
   assert.ok(home.includes(`aria-controls="view-${panel}"`), `${panel} control names its panel`);
 }
-assert.ok(home.includes('not a released macOS app'), 'study is not represented as a shipping client');
-assert.ok(home.includes('/milestone/2'), 'product direction links to the v0.3.0 milestone');
+assert.ok(home.includes('not a live Vox connection'), 'the study is not represented as a live client');
+assert.ok(home.includes('/releases/tag/v0.4.0'), 'the home page links the release it describes');
 assert.doesNotMatch(home, /data-consent-demo|network-diagram/u, 'superseded draft is not in the artifact');
 assert.ok(!files.some(file => /(?:^|\/)(?:\.env|\.git|node_modules|src|package\.json)/u.test(file)), 'only public output is built');
 console.log(`Verified ${pages.length} HTML pages, ${links} local asset/link targets, page metadata, and static output boundaries.`);

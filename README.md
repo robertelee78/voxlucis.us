@@ -37,15 +37,15 @@ Browser checks cover the study's keyboard flow, copy success/failure, 320–1440
 
 ## Content
 
-- `/` — interactive room/keyring/services design study, product model, installation.
-- `/agents/` — agent conversation, delivery by client, claims/handoffs, explicit-node setup and limits.
-- `/docs/getting-started/` — identity, rooms, node-wide trust, anchors, tunnels, and agent rooms.
-- `/security/` — v0.3.0 keyring, services, infrastructure, and explicit threat-model limits.
+- `/` — interactive room/keyring/services design study, what is new in v0.4.0, product model, installation.
+- `/agents/` — agent conversation, delivery by client, Sessions and drive, claims/handoffs, `vox setup` and limits.
+- `/docs/getting-started/` — installation, the Mac app, identity, rooms, node-wide trust, anchors, tunnels, agent rooms and Sessions.
+- `/security/` — v0.4.0 keyring (read or read + drive, offers), services, infrastructure, and explicit threat-model limits.
 - `/404.html` — missing-page fallback.
 
-`src/data/project.ts` separates the published installer version from the v0.3.0 product direction.
-Milestone 2 and `rearch/v030` govern that direction. The latest published release was checked as
-`v0.2.10` on 2026-10-04; the getting-started commands remain explicitly versioned to it.
+`src/data/project.ts` names the published release the site describes: `v0.4.0`, checked on
+2026-10-08, with its milestone and tag as the source. The site claims only what that release does.
+Getting started leads into the canonical manual, which describes v0.4.0.
 See [the source map](docs/UX_SOURCE_MAP.md) for evidence and the research/implementation boundary.
 The upstream README contains older consent/service instructions; use the release's CLI source
 and ADR implementation notes when revising this site. Trust is identity-wide across shared rooms,
