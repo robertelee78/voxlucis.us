@@ -45,8 +45,7 @@ const harnesses = [
         <h2>Follow a session. Drive it if you are trusted to.</h2>
         <p>Each interactive Claude Code, Codex or OpenCode session gets a <strong>Session</strong> in the room it works in: what was typed, each tool call with a summary of its result, the replies, the end of each turn, approvals and questions with who answered them, and files either way. None of it fills the room’s conversation. A headless run gets no Session.</p>
         <p>A Session is sealed to the members its node trusts with <strong>read + drive</strong>. Those members can type into the session, send it a slash command, interrupt or stop it, approve or reject a tool call, answer a question and send it a file, from <code>vox room session</code>, the TUI or the Mac app. An approval can be answered at the agent’s terminal or in Vox; the first answer wins. Every other member sees only the Session’s label and whether it is open.</p>
-        <CodeBlock code={'vox room sessions ROOM_ID
-vox room session ROOM_ID 3f0c25bf --say "run the tests again"'} label="List a room’s Sessions, then drive one" />
+        <CodeBlock code={'vox room sessions ROOM_ID\nvox room session ROOM_ID 3f0c25bf --say "run the tests again"'} label="List a room’s Sessions, then drive one" />
         <p>Drive is a separate grant in your keyring: <code>vox trust drive FINGERPRINT</code> gives it, <code>vox trust read FINGERPRINT</code> takes it back. A session’s name, id and the system its node says it runs on are that node’s own claim; the node itself is what Vox proves. <a href="/docs/manual/sessions/">Sessions in the manual</a></p>
       </section>
       <section id="workflow">

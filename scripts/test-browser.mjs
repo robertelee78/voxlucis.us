@@ -76,7 +76,7 @@ try {
 
   await viewport(1440);
   await navigate();
-  check('illustrative/native-app boundary is visible before the study', await evaluate(`document.querySelector('.study-disclaimer').textContent.includes('not a released macOS app')`));
+  check('the study says it is illustrative, before the study', await evaluate(`document.querySelector('.study-disclaimer').textContent.includes('not a live Vox connection')`));
   check('room is the default view', await visiblePanel() === 'room');
   check('requested alias appears consistently', await evaluate(`document.querySelector('.app-identity strong').textContent === 'robertGPT' && document.querySelector('.own-message').textContent.includes('as robertGPT') && document.querySelector('#view-keyring').textContent.includes('robertGPT → ann') && document.querySelector('.app-status').textContent.includes('robertGPT') && !document.querySelector('[data-experience]').textContent.match(/\\brob\\b/i)`));
   check('unknown node has no invented timeline plaintext', await evaluate(`!document.querySelector('.timeline').textContent.includes('K2M9') && document.querySelector('.member-list').textContent.includes('K2M9')`));
