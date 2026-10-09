@@ -1,4 +1,4 @@
-# Vox Lux website
+# Vox Lucis website
 
 Static Astro product and documentation site for [Vox](https://github.com/robertelee78/vox).
 The visual direction is room-first: a warm-dark app study connects the timeline, keyring, and
@@ -37,21 +37,22 @@ Browser checks cover the study's keyboard flow, copy success/failure, 320–1440
 
 ## Content
 
-- `/` — interactive room/keyring/services design study, product model, installation.
-- `/agents/` — agent conversation, delivery by client, claims/handoffs, explicit-node setup and limits.
-- `/docs/getting-started/` — identity, rooms, node-wide trust, anchors, tunnels, and agent rooms.
-- `/security/` — v0.3.0 keyring, services, infrastructure, and explicit threat-model limits.
+- `/` — interactive room/keyring/services design study, what is new in v0.4.0, product model, installation.
+- `/agents/` — agent conversation, delivery by client, Sessions and drive, claims/handoffs, `vox setup` and limits.
+- `/docs/getting-started/` — installation, the Mac app, identity, rooms, node-wide trust, anchors, tunnels, agent rooms and Sessions.
+- `/security/` — v0.4.0 keyring (read or read + drive, offers), services, infrastructure, and explicit threat-model limits.
 - `/404.html` — missing-page fallback.
 
-`src/data/project.ts` separates the published installer version from the v0.3.0 product direction.
-Milestone 2 and `rearch/v030` govern that direction. The latest published release was checked as
-`v0.2.10` on 2026-10-04; the getting-started commands remain explicitly versioned to it.
+`src/data/project.ts` names the published release the site describes: `v0.4.0`, checked on
+2026-10-08, with its milestone and tag as the source. The site claims only what that release does.
+Getting started leads into the canonical manual, which describes v0.4.0.
 See [the source map](docs/UX_SOURCE_MAP.md) for evidence and the research/implementation boundary.
 The upstream README contains older consent/service instructions; use the release's CLI source
 and ADR implementation notes when revising this site. Trust is identity-wide across shared rooms,
 including room-bound service access. Do not reintroduce `:grant` as a current command.
 
-The public command is `curl -fsSL https://voxlux.us/install.sh | sh`. As on HF2Q, Apache
+The public command is `curl -fsSL https://voxlucis.us/install.sh | sh`; the old domain voxlux.us
+redirects every path permanently to voxlucis.us, so `https://voxlux.us/install.sh` still works. As on HF2Q, Apache
 temporarily redirects this vanity URL to the exact versioned GitHub installer asset with
 `Cache-Control: no-store, max-age=0`. Neither `public/` nor `dist/` contains an installer copy.
 The script is release-pinned, but the upstream script selects the binary from GitHub's latest
@@ -61,7 +62,7 @@ website does not mirror, modify, or independently select them. See
 
 ## Hosting
 
-The existing Apache document root is **`voxlux.us:/opt/voxlux.us/dist`**, accessed with SSH/SCP.
+The Apache document root is **`voxlucis.us:/opt/voxlucis.us/dist`**, accessed with SSH/SCP.
 Publish only the verified static artifact, preserving the previous document root for rollback.
 The redesigned site was published and byte-verified on 2026-10-04. See the
 [deployment record](ops/deployments/2026-10-04.md) for artifact hashes, checks, and backup locations.

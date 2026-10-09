@@ -30,11 +30,11 @@ for (const file of pages) {
     assert.ok(name !== 'style' && (name !== 'script' || attributes.includes('src')), `PRODUCT: ${file} has no inline script/style elements`);
     assert.ok(!attributes.some(attribute => attribute === 'style' || /^on[a-z]/u.test(attribute)), `PRODUCT: ${file} has no inline handlers or styles`);
   }
-  assert.doesNotMatch(html, /<(?:script|link)[^>]*(?:src|href)="https?:\/\/(?!voxlux\.us)/u, `${file}: no third-party script or stylesheet`);
+  assert.doesNotMatch(html, /<(?:script|link)[^>]*(?:src|href)="https?:\/\/(?!voxlucis\.us)/u, `${file}: no third-party script or stylesheet`);
   for (const match of html.matchAll(/\b(?:href|src)="([^"<>]+)"/gu)) {
     const value = match[1].replaceAll('&amp;', '&');
-    const url = new URL(value, `https://voxlux.us/${file.replace(/index\.html$/u, '')}`);
-    if (url.origin !== 'https://voxlux.us') continue;
+    const url = new URL(value, `https://voxlucis.us/${file.replace(/index\.html$/u, '')}`);
+    if (url.origin !== 'https://voxlucis.us') continue;
     if (url.pathname === '/install.sh' && !url.search && !url.hash) continue; // Validated redirect, deliberately not a second installer file.
     let target = path.join(root, decodeURIComponent(url.pathname));
     if (url.pathname.endsWith('/')) target = path.join(target, 'index.html');
@@ -52,7 +52,7 @@ assert.ok(files.includes('favicon.svg'), 'Vox favicon exists');
 const home = await readFile(path.join(root, 'index.html'), 'utf8');
 assert.ok(!files.includes('install.sh'), 'GitHub is the only installer host; no dist/install.sh copy');
 await assert.rejects(stat('public/install.sh'), { code: 'ENOENT' }, 'no public installer copy');
-verifyInstallerConfig(await readFile('ops/apache/voxlux.us.conf', 'utf8'));
+verifyInstallerConfig(await readFile('ops/apache/voxlucis.us.conf', 'utf8'));
 for (const file of ['index.html', 'docs/manual/install/index.html']) {
   const html = await readFile(path.join(root, file), 'utf8');
   assert.ok(html.includes(installCommand), `${file}: vanity installer command`);
@@ -65,17 +65,17 @@ for (const page of manual.pages) {
   assert.ok(html.includes(`data-source-sha256="${page.sourceSha256}"`), `PRODUCT: ${page.slug} records its original bytes`);
   assert.ok(html.includes(`data-applicability="${page.appliesTo}"`), `PRODUCT: ${page.slug} states the applicable version`);
   assert.ok(html.includes(`href="${page.sourceUrl}"`), `PRODUCT: ${page.slug} links its immutable source`);
-  assert.ok(sitemap.includes(`<loc>https://voxlux.us${page.route}</loc>`), `PRODUCT: ${page.slug} is discoverable`);
+  assert.ok(sitemap.includes(`<loc>https://voxlucis.us${page.route}</loc>`), `PRODUCT: ${page.slug} is discoverable`);
   for (const chapter of manual.pages) assert.ok(html.includes(`href="${chapter.route}"`), `PRODUCT: ${page.slug} can navigate to ${chapter.slug}`);
 }
 const compatibility = await readFile(path.join(root, 'docs/getting-started/index.html'), 'utf8');
-for (const anchor of ['install', 'identity', 'first-room', 'trust', 'anchors', 'tunnels', 'agents', 'updates']) assert.ok(compatibility.includes(`id="${anchor}"`), `PRODUCT: existing bookmark #${anchor} survives`);
+for (const anchor of ['install', 'app', 'identity', 'first-room', 'trust', 'anchors', 'tunnels', 'agents', 'sessions', 'updates']) assert.ok(compatibility.includes(`id="${anchor}"`), `PRODUCT: existing bookmark #${anchor} survives`);
 for (const panel of ['room', 'keyring', 'services']) {
   assert.ok(home.includes(`id="view-${panel}"`), `app study includes ${panel}`);
   assert.ok(home.includes(`aria-controls="view-${panel}"`), `${panel} control names its panel`);
 }
-assert.ok(home.includes('not a released macOS app'), 'study is not represented as a shipping client');
-assert.ok(home.includes('/milestone/2'), 'product direction links to the v0.3.0 milestone');
+assert.ok(home.includes('not a live Vox connection'), 'the study is not represented as a live client');
+assert.ok(home.includes('/releases/tag/v0.4.0'), 'the home page links the release it describes');
 assert.doesNotMatch(home, /data-consent-demo|network-diagram/u, 'superseded draft is not in the artifact');
 assert.ok(!files.some(file => /(?:^|\/)(?:\.env|\.git|node_modules|src|package\.json)/u.test(file)), 'only public output is built');
 console.log(`Verified ${pages.length} HTML pages, ${links} local asset/link targets, page metadata, and static output boundaries.`);

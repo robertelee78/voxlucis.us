@@ -10,7 +10,7 @@ const apiTypes = new Set(['application/json', 'application/vnd.github+json']);
 const rawTypes = new Set(['text/plain', 'text/markdown', 'application/octet-stream']);
 
 async function download(url: string, limit: number, types: Set<string>, headers: Record<string, string> = {}): Promise<Uint8Array> {
-  const response = await fetch(url, { headers: { 'User-Agent': 'voxlux.us-manual-build', ...headers }, redirect: 'error', signal: AbortSignal.timeout(15000) });
+  const response = await fetch(url, { headers: { 'User-Agent': 'voxlucis.us-manual-build', ...headers }, redirect: 'error', signal: AbortSignal.timeout(15000) });
   if (!response.ok) throw new Error(`Manual source request returned HTTP ${response.status}: ${url}`);
   const mediaType = response.headers.get('content-type')?.split(';')[0].trim().toLowerCase();
   if (!mediaType || !types.has(mediaType)) throw new Error(`Manual source returned unsupported media type: ${mediaType ?? 'missing'}`);
@@ -88,8 +88,8 @@ export function githubManualLoader(): Loader {
       const routes = new Map(entries.map(entry => [entry.data.route, new Set([...entry.rendered.html.matchAll(/\bid="([^"<>]+)"/g)].map(match => match[1]))]));
       for (const entry of entries) {
         for (const match of entry.rendered.html.matchAll(/\bhref="([^"<>]+)"/g)) {
-          const url = new URL(match[1].replaceAll('&amp;', '&'), `https://voxlux.us${entry.data.route}`);
-          if (url.origin !== 'https://voxlux.us' || !url.pathname.startsWith('/docs/manual/')) continue;
+          const url = new URL(match[1].replaceAll('&amp;', '&'), `https://voxlucis.us${entry.data.route}`);
+          if (url.origin !== 'https://voxlucis.us' || !url.pathname.startsWith('/docs/manual/')) continue;
           const ids = routes.get(url.pathname);
           if (!ids || (url.hash && !ids.has(decodeURIComponent(url.hash.slice(1))))) throw new Error(`${entry.id}: missing manual chapter or fragment ${url.pathname}${url.hash}`);
         }

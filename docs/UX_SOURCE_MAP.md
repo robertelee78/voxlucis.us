@@ -100,3 +100,37 @@ This work did add documentation and an ADR to Vox, plus its README vanity-instal
 it made no Vox runtime change. See [manual operations](../ops/manual.md) and the
 [exact deployment receipt](../ops/deployments/2026-10-05-manual.md) for source ownership,
 scoped real-binary evidence, browser acceptance and public-byte verification.
+
+## v0.4.0 update — 2026-10-08
+
+The site now describes the published `v0.4.0` (tag `26ba210f`, milestone 6), the release the
+installer gives. Every claim comes from its release notes, the manual it ships (`docs/manual/` at
+the tag) and the released `vox` binary's help (`vox-aarch64-apple-darwin`, SHA-256
+`5be51fbb…a2b71f8`, run with a scratch data and config directory). Nothing was installed and no
+live room or agent session was run for the site.
+
+| Website claim | Source |
+| --- | --- |
+| The installer puts Vox.app in Applications and links `vox` into it on Apple Silicon macOS 13+; other Macs refused; Linux unchanged | Release notes, Install and update; manual `install.md`; `install.sh` v0.4.0 (22,926 bytes, `8fb2a596…13e71`) |
+| `vox serve ssh=22` makes a room and shares a port; joining does not grant it | `vox serve --help` |
+| Vox.app: a client of the same daemon; Sessions, offers; notifications without text; optional menu bar item | Release notes, The macOS app; manual `app.md` |
+| WCAG 2.1 AA contrast, brighter colours under Increase Contrast; contrast only | Release notes; manual `app.md` “Contrast and display settings” (#450). No screen-reader claim is made |
+| Sessions per interactive session, sealed to drive, driven from CLI, TUI and app | Release notes, Sessions; manual `sessions.md`; `vox room session --help` |
+| Keyring entries grant read or read + drive; `vox trust drive`/`read`; offers wait | Release notes, Trust; manual `keyring.md`; `vox trust --help` |
+| `vox setup` makes a node per installed harness and wires its hook | `vox setup --help`; manual `agents.md` |
+| Shares are addressed messages pulled into the files directory; `vox room send` is gone | `vox share --help`, `vox room --help`; manual `files.md` |
+| Family LAN: one subnet for a room's trusted members; the Mac helper is a system service | `vox lan --help`; release notes; manual `app.md` |
+| Codex still reads urgent messages next turn | manual `agents.md` delivery table |
+
+The canonical manual is built from Vox `main` as before (ADR-001). For this review it was built at
+the tag's successor that also renames the Sessions chapter's heading to its manifest title, which
+the skin requires (`41ad92ae`); the tag's own `sessions.md` heading did not match and refused.
+
+### The domain: voxlucis.us — 2026-10-08
+
+The product is Vox Lucis and the site is `https://voxlucis.us`; the app and command stay Vox and
+`vox`. Checked from outside on 2026-10-08: both domains resolve to the same host; `voxlucis.us` and
+`www.voxlucis.us` present valid certificates; every `voxlux.us` and `www` variant answers 301 to
+`https://voxlucis.us/`, and `https://voxlux.us/install.sh` answers 301 to
+`https://voxlucis.us/install.sh`. `verify:published` now checks all of these. The server's
+vhosts for the two domains are not yet in `ops/apache/`; the committed file is the old one.

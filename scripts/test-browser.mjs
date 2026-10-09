@@ -76,7 +76,7 @@ try {
 
   await viewport(1440);
   await navigate();
-  check('illustrative/native-app boundary is visible before the study', await evaluate(`document.querySelector('.study-disclaimer').textContent.includes('not a released macOS app')`));
+  check('the study says it is illustrative, before the study', await evaluate(`document.querySelector('.study-disclaimer').textContent.includes('not a live Vox connection')`));
   check('room is the default view', await visiblePanel() === 'room');
   check('requested alias appears consistently', await evaluate(`document.querySelector('.app-identity strong').textContent === 'robertGPT' && document.querySelector('.own-message').textContent.includes('as robertGPT') && document.querySelector('#view-keyring').textContent.includes('robertGPT → ann') && document.querySelector('.app-status').textContent.includes('robertGPT') && !document.querySelector('[data-experience]').textContent.match(/\\brob\\b/i)`));
   check('unknown node has no invented timeline plaintext', await evaluate(`!document.querySelector('.timeline').textContent.includes('K2M9') && document.querySelector('.member-list').textContent.includes('K2M9')`));
@@ -120,7 +120,7 @@ try {
   await navigate('/agents/');
   await viewport(1440);
   check('Agents navigation identifies the current page', await evaluate(`document.querySelector('#primary-nav a[aria-current="page"]').textContent === 'Agents'`));
-  check('agent guide distinguishes integration setup from the current installer', await evaluate(`document.querySelector('#setup .callout').textContent.includes('v0.3.0') && document.querySelector('#setup .callout').textContent.includes('v0.2.10') && document.querySelector('#setup a[href="/docs/getting-started/#agents"]') !== null`));
+  check('agent guide names the release and its one-command setup', await evaluate(`document.querySelector('#setup .callout').textContent.includes('v0.4.0') && document.querySelector('#setup .callout').textContent.includes('vox setup') && document.querySelector('#setup a[href="/docs/getting-started/#agents"]') !== null`));
   check('agent guide states Codex delivery, addressing and claim limits', await evaluate(`document.querySelector('#delivery').textContent.includes('does not interrupt Codex') && document.querySelector('#delivery').textContent.includes('Addressing is not a private message') && document.querySelector('#workflow').textContent.includes('messages, not hard locks')`));
   await evaluate(`document.querySelector('.agent-setup summary').focus()`);
   // Native details activation also needs the keypress event; use the browser's full key sequence.

@@ -1,6 +1,7 @@
 # Vanity installer transport
 
-Public command: `curl -fsSL https://voxlux.us/install.sh | sh`.
+Public command: `curl -fsSL https://voxlucis.us/install.sh | sh`. The old address,
+`https://voxlux.us/install.sh`, answers a permanent redirect to it, so it keeps working.
 
 The Apache selector follows HF2Q's pattern: a temporary 302 redirect with
 `Cache-Control: no-store, max-age=0`, pointing to one exact GitHub release asset.
@@ -10,11 +11,15 @@ and binaries. No release record or binary is hosted by this site.
 
 ## Reviewed installer
 
-- Release: `v0.2.10`, checked 2026-10-04 using GitHub account `robertelee78`.
-- Asset: https://github.com/robertelee78/vox/releases/download/v0.2.10/install.sh
-- Size: 10,530 bytes.
+- Release: `v0.4.0`, checked 2026-10-08 using GitHub account `robertelee78`.
+- Asset: https://github.com/robertelee78/vox/releases/download/v0.4.0/install.sh
+- Size: 22,926 bytes.
 - GitHub release-asset SHA-256:
-  `aed781b8c04b03c26475e2143ccc0b49e8cef7acbec85c9bc6c1b211ebd641c2`.
+  `8fb2a596b727dfb357e4a979feaee5dbf8fdaa6584e4190279989e8aa8113e71`.
+- From v0.4.0 the script installs `Vox.app` with `vox` inside it on Apple Silicon Macs on
+  macOS 13 or later, and refuses any other Mac before downloading; on x86_64 Linux it installs
+  `vox` as before. The vhost in `ops/apache/voxlucis.us.conf` selects this asset; the live
+  server still serves the previous selector until the vhost is published.
 
 The script version is pinned, **not the installed binary version**. The unchanged
 upstream script resolves GitHub's latest stable per-platform release record, then
@@ -27,7 +32,7 @@ override that upstream selection or change Vox's updater.
 1. Review a published GitHub release and its original `install.sh` asset, using
    account `robertelee78`. Never regenerate or edit the installer here.
 2. Update the version, asset digest, and size in `src/data/project.ts`, the exact
-   redirect in `ops/apache/voxlux.us.conf`, and this record together. Review the
+   redirect in `ops/apache/voxlucis.us.conf`, and this record together. Review the
    guide against that release. Do not change the selector to a moving latest URL.
 3. Run `npm run verify` and `npm run test:browser` against the built preview.
    The offline tests reject wrong hosts/versions, permanent or cacheable
@@ -41,3 +46,13 @@ override that upstream selection or change Vox's updater.
 An Astro-only local preview has no `/install.sh` endpoint: Apache owns that route.
 These checks prove website transport, not installation on a clean macOS/Linux
 machine or correctness of the Vox application.
+
+## The vhosts
+
+`ops/apache/` holds the server's two vhosts, copied read-only from
+`/etc/apache2/sites-available/` on 2026-10-08 (the server's SHA-256 before any change:
+`voxlucis.us.conf` `36f72d9c…98ac5`, `voxlux.us.conf` `449b8846…b7ee6`):
+
+- `voxlucis.us.conf`: the site, from `/opt/voxlucis.us/dist`, with the installer selector. The
+  only difference from the server's copy is that selector, which names v0.4.0's asset.
+- `voxlux.us.conf`: the old domain, every path a 301 to the same path on `https://voxlucis.us`.
