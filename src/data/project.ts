@@ -4,7 +4,7 @@ export const project = {
   repository: 'https://github.com/robertelee78/vox',
   release: 'v0.4.0',
   reviewed: '2026-10-08',
-  site: 'https://voxlux.us',
+  site: 'https://voxlucis.us',
 } as const;
 
 export const releaseUrl = `${project.repository}/releases/tag/${project.release}`;

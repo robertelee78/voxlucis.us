@@ -1,6 +1,7 @@
 # Vanity installer transport
 
-Public command: `curl -fsSL https://voxlux.us/install.sh | sh`.
+Public command: `curl -fsSL https://voxlucis.us/install.sh | sh`. The old address,
+`https://voxlux.us/install.sh`, answers a permanent redirect to it, so it keeps working.
 
 The Apache selector follows HF2Q's pattern: a temporary 302 redirect with
 `Cache-Control: no-store, max-age=0`, pointing to one exact GitHub release asset.

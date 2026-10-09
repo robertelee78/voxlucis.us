@@ -30,11 +30,11 @@ for (const file of pages) {
     assert.ok(name !== 'style' && (name !== 'script' || attributes.includes('src')), `PRODUCT: ${file} has no inline script/style elements`);
     assert.ok(!attributes.some(attribute => attribute === 'style' || /^on[a-z]/u.test(attribute)), `PRODUCT: ${file} has no inline handlers or styles`);
   }
-  assert.doesNotMatch(html, /<(?:script|link)[^>]*(?:src|href)="https?:\/\/(?!voxlux\.us)/u, `${file}: no third-party script or stylesheet`);
+  assert.doesNotMatch(html, /<(?:script|link)[^>]*(?:src|href)="https?:\/\/(?!voxlucis\.us)/u, `${file}: no third-party script or stylesheet`);
   for (const match of html.matchAll(/\b(?:href|src)="([^"<>]+)"/gu)) {
     const value = match[1].replaceAll('&amp;', '&');
-    const url = new URL(value, `https://voxlux.us/${file.replace(/index\.html$/u, '')}`);
-    if (url.origin !== 'https://voxlux.us') continue;
+    const url = new URL(value, `https://voxlucis.us/${file.replace(/index\.html$/u, '')}`);
+    if (url.origin !== 'https://voxlucis.us') continue;
     if (url.pathname === '/install.sh' && !url.search && !url.hash) continue; // Validated redirect, deliberately not a second installer file.
     let target = path.join(root, decodeURIComponent(url.pathname));
     if (url.pathname.endsWith('/')) target = path.join(target, 'index.html');
@@ -65,7 +65,7 @@ for (const page of manual.pages) {
   assert.ok(html.includes(`data-source-sha256="${page.sourceSha256}"`), `PRODUCT: ${page.slug} records its original bytes`);
   assert.ok(html.includes(`data-applicability="${page.appliesTo}"`), `PRODUCT: ${page.slug} states the applicable version`);
   assert.ok(html.includes(`href="${page.sourceUrl}"`), `PRODUCT: ${page.slug} links its immutable source`);
-  assert.ok(sitemap.includes(`<loc>https://voxlux.us${page.route}</loc>`), `PRODUCT: ${page.slug} is discoverable`);
+  assert.ok(sitemap.includes(`<loc>https://voxlucis.us${page.route}</loc>`), `PRODUCT: ${page.slug} is discoverable`);
   for (const chapter of manual.pages) assert.ok(html.includes(`href="${chapter.route}"`), `PRODUCT: ${page.slug} can navigate to ${chapter.slug}`);
 }
 const compatibility = await readFile(path.join(root, 'docs/getting-started/index.html'), 'utf8');

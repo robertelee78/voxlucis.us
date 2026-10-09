@@ -1,7 +1,7 @@
 import { defineConfig } from 'astro/config';
 
 export default defineConfig({
-  site: 'https://voxlux.us',
+  site: 'https://voxlucis.us',
   output: 'static',
   trailingSlash: 'always',
   build: { format: 'directory', inlineStylesheets: 'never' },

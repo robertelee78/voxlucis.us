@@ -51,7 +51,8 @@ The upstream README contains older consent/service instructions; use the release
 and ADR implementation notes when revising this site. Trust is identity-wide across shared rooms,
 including room-bound service access. Do not reintroduce `:grant` as a current command.
 
-The public command is `curl -fsSL https://voxlux.us/install.sh | sh`. As on HF2Q, Apache
+The public command is `curl -fsSL https://voxlucis.us/install.sh | sh`; the old domain voxlux.us
+redirects every path permanently to voxlucis.us, so `https://voxlux.us/install.sh` still works. As on HF2Q, Apache
 temporarily redirects this vanity URL to the exact versioned GitHub installer asset with
 `Cache-Control: no-store, max-age=0`. Neither `public/` nor `dist/` contains an installer copy.
 The script is release-pinned, but the upstream script selects the binary from GitHub's latest

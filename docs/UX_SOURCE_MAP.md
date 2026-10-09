@@ -125,3 +125,12 @@ live room or agent session was run for the site.
 The canonical manual is built from Vox `main` as before (ADR-001). For this review it was built at
 the tag's successor that also renames the Sessions chapter's heading to its manifest title, which
 the skin requires (`41ad92ae`); the tag's own `sessions.md` heading did not match and refused.
+
+### The domain: voxlucis.us — 2026-10-08
+
+The product is Vox Lucis and the site is `https://voxlucis.us`; the app and command stay Vox and
+`vox`. Checked from outside on 2026-10-08: both domains resolve to the same host; `voxlucis.us` and
+`www.voxlucis.us` present valid certificates; every `voxlux.us` and `www` variant answers 301 to
+`https://voxlucis.us/`, and `https://voxlux.us/install.sh` answers 301 to
+`https://voxlucis.us/install.sh`. `verify:published` now checks all of these. The server's
+vhosts for the two domains are not yet in `ops/apache/`; the committed file is the old one.
