@@ -4,7 +4,7 @@ import { test } from 'node:test';
 import { project, installerSourceUrl, installerSize } from '../src/data/project.ts';
 import { verifyInstallerConfig, verifyInstallerRedirect, verifyInstallerTransport } from './installer-transport.mjs';
 
-const config = await readFile(new URL('../ops/apache/voxlux.us.conf', import.meta.url), 'utf8');
+const config = await readFile(new URL('../ops/apache/voxlucis.us.conf', import.meta.url), 'utf8');
 const redirect = (status = 302, location = installerSourceUrl, cache = 'no-store, max-age=0') => new Response(null, { status, headers: { location, 'cache-control': cache } });
 
 test('Apache selects the reviewed GitHub asset with no-store', () => verifyInstallerConfig(config));

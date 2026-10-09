@@ -62,7 +62,7 @@ website does not mirror, modify, or independently select them. See
 
 ## Hosting
 
-The existing Apache document root is **`voxlux.us:/opt/voxlux.us/dist`**, accessed with SSH/SCP.
+The Apache document root is **`voxlucis.us:/opt/voxlucis.us/dist`**, accessed with SSH/SCP.
 Publish only the verified static artifact, preserving the previous document root for rollback.
 The redesigned site was published and byte-verified on 2026-10-04. See the
 [deployment record](ops/deployments/2026-10-04.md) for artifact hashes, checks, and backup locations.

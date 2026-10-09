@@ -52,7 +52,7 @@ assert.ok(files.includes('favicon.svg'), 'Vox favicon exists');
 const home = await readFile(path.join(root, 'index.html'), 'utf8');
 assert.ok(!files.includes('install.sh'), 'GitHub is the only installer host; no dist/install.sh copy');
 await assert.rejects(stat('public/install.sh'), { code: 'ENOENT' }, 'no public installer copy');
-verifyInstallerConfig(await readFile('ops/apache/voxlux.us.conf', 'utf8'));
+verifyInstallerConfig(await readFile('ops/apache/voxlucis.us.conf', 'utf8'));
 for (const file of ['index.html', 'docs/manual/install/index.html']) {
   const html = await readFile(path.join(root, file), 'utf8');
   assert.ok(html.includes(installCommand), `${file}: vanity installer command`);
