@@ -147,7 +147,7 @@ into a scratch home; no live room or agent session was run for the site.
 | --- | --- |
 | Vox is now Vox Lucis; the app stays Vox, the command `vox` | Release notes, The name (#585) |
 | Each release opens the previous one's data with nothing lost; v0.4.0 and v0.4.1 interoperate | Release notes, Your data across upgrades (#580), Security (#581) |
-| The installer and `vox update` install and refresh the skill pack; edited files are kept and named | Release notes (#586); `vox agent skill --help`; `install.sh` v0.4.1 (23,490 bytes, `a87ef19a…1ebab9e2`) |
+| The installer installs the skill pack; `vox agent skill --install` installs or refreshes it by hand; edited files are kept and named. `vox update` is not claimed: in v0.4.1 it leaves no harness with the pack (to be fixed in v0.4.2) | `vox agent skill --help`; `install.sh` v0.4.1 (23,490 bytes, `a87ef19a…1ebab9e2`) |
 | `vox uninstall` removes what Vox installed, keeps nodes; `--dry-run` | Release notes (#588); `vox uninstall --help` |
 | A repo tied to no room asks once; `vox room join … --bind`; `vox agent room --none` | Release notes (#587); `vox room join --help`, `vox agent room --help` |
 | First run in the app; Keep Running from the menu; Settings (⌘,); times and replies; Sign Out | Release notes, The macOS app; `vox node signout --help`; manual `app.md` |
