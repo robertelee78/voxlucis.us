@@ -11,14 +11,15 @@ and binaries. No release record or binary is hosted by this site.
 
 ## Reviewed installer
 
-- Release: `v0.4.0`, checked 2026-10-08 using GitHub account `robertelee78`.
-- Asset: https://github.com/robertelee78/vox/releases/download/v0.4.0/install.sh
-- Size: 22,926 bytes.
+- Release: `v0.4.1`, checked 2026-10-09 using GitHub account `robertelee78`.
+- Asset: https://github.com/robertelee78/vox/releases/download/v0.4.1/install.sh
+- Size: 23,490 bytes.
 - GitHub release-asset SHA-256:
-  `8fb2a596b727dfb357e4a979feaee5dbf8fdaa6584e4190279989e8aa8113e71`.
+  `a87ef19a69da2919611d76c4b2ac88365d9893fdd640ad926a89140d1ebab9e2`.
 - From v0.4.0 the script installs `Vox.app` with `vox` inside it on Apple Silicon Macs on
   macOS 13 or later, and refuses any other Mac before downloading; on x86_64 Linux it installs
-  `vox` as before. The vhost in `ops/apache/voxlucis.us.conf` selects this asset; the live
+  `vox` as before. From v0.4.1 it also installs or refreshes the agent skill pack for every
+  harness present (`VOX_NO_SKILL_INSTALL=1` skips it). The vhost in `ops/apache/voxlucis.us.conf` selects this asset; the live
   server still serves the previous selector until the vhost is published.
 
 The script version is pinned, **not the installed binary version**. The unchanged
@@ -54,5 +55,5 @@ machine or correctness of the Vox application.
 `voxlucis.us.conf` `36f72d9c…98ac5`, `voxlux.us.conf` `449b8846…b7ee6`):
 
 - `voxlucis.us.conf`: the site, from `/opt/voxlucis.us/dist`, with the installer selector. The
-  only difference from the server's copy is that selector, which names v0.4.0's asset.
+  only difference from the server's copy is that selector, which names v0.4.1's asset.
 - `voxlux.us.conf`: the old domain, every path a 301 to the same path on `https://voxlucis.us`.

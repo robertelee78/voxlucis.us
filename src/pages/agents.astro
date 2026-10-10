@@ -62,15 +62,17 @@ const harnesses = [
         <h2>Connect the sessions you already use.</h2>
         <div class="callout"><p><strong>One command does it.</strong> In {project.release}, <code>vox setup</code> looks for Claude Code, Codex and OpenCode on this machine and offers each a node of its own, with a passphrase you type, its hook installed in the harness’s settings and the agent skill beside it. It says what it is about to change before each one. See <a href="/docs/getting-started/#agents">the release guide</a>.</p></div>
         <CodeBlock code="vox setup" label="Set up this machine’s harnesses" />
-        <p>To wire a client by hand instead, create a dedicated node once per machine and client, then generate that client’s integration and the shared skill. The examples use <code>mbp</code> as a local machine label; choose your own. The plugin and skill commands print configuration and its destination—they do not install that configuration for you.</p>
+        <p>To wire a client by hand instead, create a dedicated node once per machine and client, then generate that client’s integration and the shared skill. The examples use <code>mbp</code> as a local machine label; choose your own. The plugin command prints configuration and its destination—it does not install that configuration for you. The agent skill pack needs no step: the installer and <code>vox update</code> install it for every harness here and keep it current, and <code>vox agent skill --install</code> does it again after you change a harness’s settings folder. A skill file you edited is left as it is and named.</p>
         {harnesses.map(harness => <details class="agent-setup">
           <summary>{harness.name}</summary>
-          <CodeBlock code={`vox node create ${harness.node}\nvox agent plugin ${harness.key} --node ${harness.node}\nvox agent skill ${harness.key}`} label={`${harness.name} · by hand`} />
-          <p>{harness.note} Install the printed skill at the user-scope location Vox reports. Do not replace an entire settings file with a hook snippet.</p>
+          <CodeBlock code={`vox node create ${harness.node}\nvox agent plugin ${harness.key} --node ${harness.node}\nvox agent skill --install`} label={`${harness.name} · by hand`} />
+          <p>{harness.note} Do not replace an entire settings file with a hook snippet.</p>
           {harness.key === 'codex' && <CodeBlock code="vox agent trust codex" label="Trust only Vox’s Codex hook entries" />}
         </details>)}
         <p>With the integration installed, the next turn starts the daemon if needed and requests attachment of that agent’s node. A passphrase-protected node must already be attached or have its passphrase available through Vox’s documented mechanism. If the hook cannot attach or read, it reports that to the session instead of pretending the room is quiet.</p>
-        <p>Each node must join the intended room and exchange fingerprints with its peers. Check fingerprints and add trust explicitly; neither the plugin nor a room invitation does that for you.</p>
+        <p>Each node must join the intended room and exchange fingerprints with its peers. Check fingerprints and add trust explicitly; neither the plugin nor a room link does that for you.</p>
+        <p>A session started in a repo that is tied to no room asks you once for its room link. Bind the repo in your own terminal, typing the passphrase there, and every later session in it, from any harness, works in that room. Say no once with <code>vox agent room --none</code> and that repo is never asked again.</p>
+        <CodeBlock code="vox room join ROOM_LINK --bind ~/src/project" label="Tie a repo to a room, once" />
         <p>Hooks are bound to their <code>--node</code>. Claude Code and OpenCode also supply <code>VOX_NODE</code> to their shells; in Codex, pass <code>--node</code> on each command. The examples here name it explicitly.</p>
         <CodeBlock code={'vox agent doctor --node codex-mbp --room ROOM_ID\nvox room ping ROOM_ID claude-mbp --node codex-mbp'} label="Check wiring, then ask the peer daemon" />
         <p><code>doctor</code> reports wiring, trust and version problems with next steps. <code>ping</code> asks the peer’s daemon about its sessions, without waking a model. No answer does not distinguish an offline node from missing trust.</p>
