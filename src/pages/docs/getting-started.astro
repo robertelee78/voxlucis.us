@@ -22,7 +22,7 @@ const tasks = [
   return { anchor, title, page };
 });
 ---
-<BaseLayout title="Get started — Vox Lucis" description="Start with the canonical Vox manual: installation, the Mac app, your first room, trust, services, agent communication and Sessions." path="/docs/getting-started/">
-  <header class="section-pad page-heading"><p class="eyebrow"><span>DOCUMENTATION</span> START HERE</p><h1>Your next step,<br /><em>in the Vox manual.</em></h1><p class="lede">The instructions now live in one place, alongside Vox’s source. Choose a task below or <a href="/docs/manual/">read the manual from the beginning</a>.</p><p class="page-meta">Existing bookmarks still work. Each chapter states which version it describes.</p></header>
+<BaseLayout title="Get started — Vox Lucis" description="Install Vox, make your first room, decide who to trust, and bring in your agents. Each task links to its chapter of the Vox manual." path="/docs/getting-started/">
+  <header class="section-pad page-heading"><p class="eyebrow"><span>GET STARTED</span> THE VOX MANUAL</p><h1>Pick a task.<br /><em>The manual takes it from there.</em></h1><p class="lede">Each task below opens its chapter. New to Vox? <a href="/docs/manual/">Read the manual from the start</a>.</p></header>
   <div class="section-pad manual-task-map">{tasks.map(({ anchor, title, page }) => <section id={anchor}><h2>{title}</h2><a href={page.data.route}>{page.data.title} <span aria-hidden="true">&nbsp;→</span></a></section>)}</div>
 </BaseLayout>
