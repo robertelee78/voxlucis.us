@@ -155,3 +155,24 @@ into a scratch home; no live room or agent session was run for the site.
 | Four ticks under each service, in every client and `vox service list` | Release notes, Services (#640) |
 | Trusting from the app grants read only; drive via `vox trust drive` | Release notes, Trust; `vox trust --help` |
 | The identity exchange's defences, proven on the wire | Release notes, Security (#581) |
+
+## v0.4.2 and v0.4.3 update — 2026-10-10
+
+The site describes `v0.4.3` (tag `c942c4564`, milestone 10), with what v0.4.2 (milestone 8) added.
+Claims come from the v0.4.2 published release notes, the v0.4.3 release notes, and the `vox` CLI
+source at the v0.4.3 tag (`crates/vox-tui/src/cli.rs`) and ADR-030 there. No binary was run and no
+screenshot of the app was taken for this update. The manual at the tag still marks its chapters
+`v0.4.1` and describes the sidebar's NEEDS YOU group; the site does not quote it for v0.4.3.
+
+| Website claim | Source |
+| --- | --- |
+| The room list is one flat chat list: time, sender and preview, an unread badge in a stronger colour when something waits on you; a trust offer at the top of its room | v0.4.3 notes, The app (#683) |
+| The app attaches a node, forgets a passphrase, starts the daemon; it never grants drive, and gives the `vox trust drive` command with Copy | v0.4.3 notes (#680); commit `fc2226667` |
+| New Room… and Join Room… in the Room menu (⌘N, ⇧⌘J) | v0.4.2 notes (#664) |
+| `vox update` and the app install and refresh the skill pack | v0.4.2 notes (#665) |
+| Every copied command works as pasted; one command for read, one for read + drive | v0.4.3 notes, Commands you copy and paste (#662) |
+| Every rotated key travels in a fresh post-quantum session; a v0.4.2 member keeps reading and is named as without post-compromise protection | v0.4.3 notes, Post-quantum recovery; ADR-030 D-1, W-4 (#682) |
+| Vox asks which room a repo works in (app, notification, `vox status`); subfolders and worktrees | v0.4.3 notes, Agents (#671); `vox room join --bind`, `vox agent room --none` in `cli.rs` |
+| `vox setup` names each agent's node; driven text is delivered only when it reaches the model; renames show within seconds; a drive change shows at once | v0.4.3 notes (#666, #674, #669, #675) |
+| `--task`, `--project`, `--milestone` tags and `vox room read --tag` | v0.4.3 notes (#636); `cli.rs` room post and read args |
+| A keyring change's passphrase is typed at a terminal or in the app, never from a file or the environment | `room_cli.rs` (the no-terminal refusal); v0.4.1 notes (#593) |

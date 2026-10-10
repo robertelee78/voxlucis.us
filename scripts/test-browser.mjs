@@ -120,7 +120,7 @@ try {
   await navigate('/agents/');
   await viewport(1440);
   check('Agents navigation identifies the current page', await evaluate(`document.querySelector('#primary-nav a[aria-current="page"]').textContent === 'Agents'`));
-  check('agent guide names the release and its one-command setup', await evaluate(`document.querySelector('#setup .callout').textContent.includes('v0.4.1') && document.querySelector('#setup .callout').textContent.includes('vox setup') && document.querySelector('#setup a[href="/docs/getting-started/#agents"]') !== null`));
+  check('agent guide names the release and its one-command setup', await evaluate(`document.querySelector('#setup .callout').textContent.includes('v0.4.3') && document.querySelector('#setup .callout').textContent.includes('vox setup') && document.querySelector('#setup a[href="/docs/getting-started/#agents"]') !== null`));
   check('agent guide states Codex delivery, addressing and claim limits', await evaluate(`document.querySelector('#delivery').textContent.includes('does not interrupt Codex') && document.querySelector('#delivery').textContent.includes('Addressing is not a private message') && document.querySelector('#workflow').textContent.includes('messages, not hard locks')`));
   await evaluate(`document.querySelector('.agent-setup summary').focus()`);
   // Native details activation also needs the keypress event; use the browser's full key sequence.

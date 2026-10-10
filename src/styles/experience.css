@@ -21,7 +21,7 @@
   .view-tabs button { min-height: 40px; border: 1px solid transparent; border-radius: 5px; background: transparent; padding: .5rem 1.1rem; color: var(--body); font-size: .8125rem; }
   .view-tabs button:hover { color: var(--text); background: #ffffff07; }
   .view-tabs button[aria-selected='true'] { background: #173144; border-color: #39748f; color: #b3e5ff; box-shadow: inset 0 1px #5ec8ff18; }
-  .app-window { display: grid; grid-template-columns: 180px minmax(0, 1fr); min-height: 566px; }
+  .app-window { display: grid; grid-template-columns: 200px minmax(0, 1fr); min-height: 566px; }
   .app-sidebar { display: flex; flex-direction: column; padding: 1.5rem 1rem 1.25rem; background: linear-gradient(150deg, #1b1d22, #141519 75%); border-right: 1px solid var(--line); min-width: 0; }
   .app-identity { display: flex; flex-wrap: wrap; gap: .7rem; align-items: center; margin-bottom: 2rem; min-width: 0; }
   .app-identity > div { min-width: 0; overflow-wrap: anywhere; }
@@ -31,9 +31,14 @@
   .live-dot { display: inline-block; width: 5px; height: 5px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 6px #5ec8ff65; vertical-align: .15em; margin-right: .25rem; }
   .app-label { display: flex; flex-wrap: wrap; justify-content: space-between; gap: .4rem; font: .625rem/1.6 var(--mono); letter-spacing: .06em; color: var(--muted); }
   .room-list { list-style: none; padding: 0; margin-top: .5rem; }
-  .room-list li { display: flex; justify-content: space-between; align-items: center; gap: .5rem; min-height: 41px; padding: .55rem .65rem; font-size: .75rem; }
-  .room-list li.selected-room { background: #25272e; border-radius: 4px; color: var(--text); font-weight: 600; }
-  .room-unread { background: #3b3e47; border-radius: 3px; padding: .1rem .4rem; font: .625rem/1.4 var(--mono); }
+  .room-list li { display: flex; flex-direction: column; gap: .2rem; min-height: 41px; padding: .55rem .65rem; font-size: .75rem; border-left: 2px solid transparent; }
+  .room-list li.selected-room { background: #25272e; border-radius: 0 4px 4px 0; border-left-color: var(--accent); color: var(--text); }
+  .room-row { display: flex; justify-content: space-between; align-items: baseline; gap: .5rem; min-width: 0; }
+  .room-name { font-weight: 600; color: var(--text); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .room-row time { flex: none; font: .5625rem/1.4 var(--mono); color: var(--muted); }
+  .room-preview { flex: 1; min-width: 0; font-size: .625rem; color: var(--body); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .room-unread { flex: none; background: #3b3e47; color: var(--text); border-radius: 3px; padding: .1rem .4rem; font: .625rem/1.4 var(--mono); }
+  .room-unread.waits-on-you { background: var(--attention); color: var(--accent-dark); font-weight: 600; }
   .sidebar-bottom { margin-top: auto; padding-top: 3rem; }
   .sidebar-bottom p { font: .625rem/1.8 var(--mono); display: flex; flex-wrap: wrap; gap: .4rem; justify-content: space-between; margin-top: .7rem; color: var(--body); }
   .sidebar-bottom p span { color: var(--muted); font-size: .6rem; }
@@ -132,6 +137,7 @@
   .model-definitions dd { font-size: .875rem; line-height: 1.8; }
   .principles-section { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr); gap: 5rem; border-top: 1px solid var(--line); }
   .principles-list article + article { margin-top: 2rem; }
+  .principles-section .release-boundary { margin-top: 1.4rem; max-width: 26rem; }
   .principles-list h3 { font-size: 1rem; font-weight: 600; margin-bottom: .7rem; }
   .principles-list p { font-size: .875rem; }
   .source-note { display: flex; flex-wrap: wrap; gap: 1rem 2rem; padding: 0 var(--pad) 3rem; font-size: .8125rem; }
@@ -155,7 +161,9 @@
     .identity-facet { font-size: 1.3rem; }
     .app-sidebar > .app-label, .sidebar-bottom { display: none; }
     .room-list { display: flex; flex-wrap: wrap; margin: 0; gap: .3rem; }
-    .room-list li { min-height: 35px; font-size: .625rem; }
+    .room-list li { flex-direction: row; align-items: center; gap: .5rem; min-height: 35px; font-size: .625rem; border-left: 0; border-radius: 4px; }
+    .room-list li.selected-room { border-radius: 4px; }
+    .room-list .room-row time, .room-preview { display: none; }
     .room-view { grid-template-columns: minmax(0, 1fr) 200px; }
     .model-section, .principles-section { grid-template-columns: minmax(0, 1fr); }
     .model-intro > p:not(.eyebrow) { max-width: 40rem; }

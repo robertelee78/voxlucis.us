@@ -37,15 +37,15 @@ Browser checks cover the study's keyboard flow, copy success/failure, 320–1440
 
 ## Content
 
-- `/` — interactive room/keyring/services design study, what is new in v0.4.1, product model, installation.
+- `/` — interactive room/keyring/services design study (its room list is v0.4.3's flat chat list), what is new in v0.4.3, product model, installation.
 - `/agents/` — agent conversation, delivery by client, Sessions and drive, claims/handoffs, `vox setup`, the skill pack, binding a repo to a room, and limits.
 - `/docs/getting-started/` — installation, the Mac app, identity, rooms, node-wide trust, anchors, tunnels, agent rooms and Sessions.
-- `/security/` — v0.4.1 keyring (read or read + drive, offers), services, infrastructure, and explicit threat-model limits.
+- `/security/` — v0.4.3 keyring (read or read + drive, offers), services, post-quantum key delivery, infrastructure, and explicit threat-model limits.
 - `/404.html` — missing-page fallback.
 
-`src/data/project.ts` names the published release the site describes: `v0.4.1`, checked on
-2026-10-09, with its milestone and tag as the source. The site claims only what that release does.
-Getting started leads into the canonical manual, which describes v0.4.1.
+`src/data/project.ts` names the published release the site describes: `v0.4.3`, checked on
+2026-10-10, with its milestone and tag as the source. The site claims only what that release does.
+Getting started leads into the canonical manual; each chapter states the version it describes.
 See [the source map](docs/UX_SOURCE_MAP.md) for evidence and the research/implementation boundary.
 The upstream README contains older consent/service instructions; use the release's CLI source
 and ADR implementation notes when revising this site. Trust is identity-wide across shared rooms,
