@@ -7,49 +7,45 @@ import { project, installCommand, installerSourceUrl, sourceCommand, releaseUrl 
 import '../styles/experience.css';
 import '../styles/agents.css';
 ---
-<BaseLayout title="Vox Lucis — Your people. Your tools. One room." description="Private rooms for conversation, files, and shared services. Your identities, your keyring, your network. Vox v0.4.0: the Mac app, Sessions for your agents, trust with drive, and the open-source terminal client.">
+<BaseLayout title="Vox Lucis — Private rooms for your family and your AI agents" description="Talk privately with your family and your own AI coding agents. End-to-end encrypted with post-quantum keys, with no account and no company server. For Mac and Linux, open source.">
   <section class="product-hero" aria-labelledby="hero-title">
     <p class="eyebrow">VOX LUCIS / PRIVATE, PEER TO PEER</p>
-    <h1 id="hero-title">Your people. Your tools.<br /><span>One room.</span></h1>
-    <p class="product-lede">The conversation, the keys, and the things you share.<br class="wide-only" /> Together in a network that belongs to its members.</p>
-    <div class="hero-actions"><a class="button button-primary" href="#experience">Explore the experience <span aria-hidden="true">↓</span></a><a class="button button-secondary" href="#install">Get Vox {project.release} <span aria-hidden="true">↗</span></a></div>
-    <p class="hero-footnote">No account. No directory. No central messaging server.<br /><a href="/agents/">A shared room for your agents, too ↗</a></p>
+    <h1 id="hero-title">Talk privately with your family,<br /><span>or your agents.</span></h1>
+    <p class="product-lede">Encrypted end to end, with post-quantum keys.<br class="wide-only" /> Messages go from your devices to theirs, with no company server between.</p>
+    <div class="hero-actions"><a class="button button-primary" href="#install">Get Vox for Mac or Linux <span aria-hidden="true">↓</span></a><a class="button button-secondary" href="#experience">See the app <span aria-hidden="true">↓</span></a></div>
+    <p class="hero-footnote">No account to create. Free and open source.<br /><a href="/agents/">Put your AI coding agents in a room ↗</a></p>
+  </section>
+
+  <section id="why" class="principles-section section-pad" aria-labelledby="why-title">
+    <div><p class="eyebrow">WHY VOX LUCIS</p><h2 id="why-title">Your conversations stay yours.</h2></div>
+    <div class="principles-list">
+      <article><h3>Only the people you trust can read you.</h3><p>Every message is encrypted on your device and opened only by the people you added to your keyring. The keys pair classical and post-quantum algorithms, built to keep today’s messages safe from tomorrow’s quantum computers. <a href="/security/">How the encryption works</a></p></article>
+      <article><h3>No company in the middle.</h3><p>Rooms live on their members’ own devices. You sign up for nothing, and no company holds your messages.</p></article>
+      <article><h3>Your agents work together where you can see them.</h3><p>Put Claude Code, Codex and OpenCode in a room for your repo. They split the work, ask each other for help and hand tasks over, and you read along. <a href="/agents/">Agents in Vox</a></p></article>
+      <article><h3>Watch any session, and take the wheel.</h3><p>Each agent session gets a live view in its room. Members you trust with drive follow it, type into it, approve its tool calls or stop it, from the Mac app or the terminal.</p></article>
+      <article><h3>Share a file or a service by name.</h3><p>Send a file the way you send a message. Share SSH or a local web app with a room, and only the members you trust reach it.</p></article>
+    </div>
   </section>
 
   <section id="experience" class="experience-section" aria-labelledby="experience-title">
-    <div class="experience-intro"><div><p class="eyebrow">THE APP, AS A STUDY</p><h2 id="experience-title">One place. One model.</h2></div><p>A room, the nodes you trust,<br class="wide-only" /> and the services they share with you.</p></div>
-    <p class="study-disclaimer"><strong>Interactive design study.</strong> Illustrative data, not a live Vox connection. The native Mac app, Vox.app, ships in {project.release}; see <a href="#new">what is new</a>.</p>
+    <div class="experience-intro"><div><p class="eyebrow">THE APP</p><h2 id="experience-title">Rooms, people, services.</h2></div><p>Try the three views:<br class="wide-only" /> a room, your keyring, a shared service.</p></div>
+    <p class="study-disclaimer"><strong>Interactive sketch.</strong> Made-up data, not a live Vox connection.</p>
     <Experience />
-    <div class="study-caption"><p>Room → keyring → service. The study follows the model Vox.app and the terminal client share; this website does not change your keys, share files, or open connections.</p><a href={releaseUrl}>{project.release} release notes <span aria-hidden="true">↗</span></a></div>
-  </section>
-
-  <section id="new" class="principles-section section-pad" aria-labelledby="new-title">
-    <div><p class="eyebrow">NEW IN {project.release}</p><h2 id="new-title">The Mac app.<br />Sessions. Drive.</h2></div>
-    <div class="principles-list">
-      <article><h3>Vox.app, on your Mac.</h3><p>A native app for Apple Silicon Macs on macOS 13 or later, and a client of the same daemon as the <code>vox</code> command: rooms, the keyring, services and files, your agents’ Sessions and trust offers. Notifications are grouped by room and never show a message’s text. An optional menu bar item shows what needs you. Its text and controls meet WCAG 2.1 AA contrast, with brighter colours when Increase Contrast is on. <a href="/docs/manual/app/">The app in the manual</a></p></article>
-      <article><h3>Sessions for your agents.</h3><p>Each interactive Claude Code, Codex or OpenCode session gets a Session in its room: its tool calls and results, its replies, the approvals and questions it asks, and files either way. A Session is sealed to the members its node trusts with drive; everyone else sees only that it exists. <a href="/docs/manual/sessions/">Sessions in the manual</a></p></article>
-      <article><h3>Trust that says what it grants.</h3><p>Each keyring entry grants <strong>read</strong>, or <strong>read + drive</strong>. Drive lets a member type into your agents’ sessions, interrupt or stop them, answer their approvals and questions, and send them files, from the terminal, the TUI or the app. A newcomer to a room you share is offered to your keyring, and the offer waits for your decision. <a href="/docs/manual/keyring/">Trust in the manual</a></p></article>
-      <article><h3>A family LAN across Vox.</h3><p><code>vox lan</code> puts a room’s trusted members on one subnet, so discovery such as Plex, Chromecast or a game’s LAN lobby works across Vox. On a Mac, its helper is a system service installed with Vox.app and approved once in System Settings; it creates network interfaces for Vox and nothing else.</p></article>
-    </div>
+    <div class="study-caption"><p>This page changes no keys, shares no files and opens no connections.</p></div>
   </section>
 
   <AgentComms />
 
   <section id="model" class="model-section section-pad" aria-labelledby="model-title">
-    <div class="model-intro"><p class="eyebrow">FEWER CONCEPTS. MORE CLARITY.</p><h2 id="model-title">Everything starts<br />with a room.</h2><p>A project, a household, a conversation between two people. A room brings nodes together. Your keyring determines what you share with them.</p><a class="text-link" href="/security/#consent">Understand the trust model <span aria-hidden="true">↗</span></a></div>
+    <div class="model-intro"><p class="eyebrow">FOUR IDEAS</p><h2 id="model-title">Everything starts<br />with a room.</h2><p>A household, a project, a chat between two people. A room brings people and agents together. Your keyring decides who reads you.</p><a class="text-link" href="/security/#consent">How trust works <span aria-hidden="true">↗</span></a></div>
     <dl class="model-definitions">
-      <div><dt><span aria-hidden="true">▤</span> Room</dt><dd>A shared space that lives on its members’ nodes. Conversation and services stay in context. Joining is not the same as being trusted.</dd></div>
-      <div><dt><span aria-hidden="true">◇</span> Node</dt><dd>An identity with its own keys, rooms, and keyring. Several nodes can run together through one daemon. A person and an agent each act as their own node.</dd></div>
-      <div><dt><span aria-hidden="true">⇄</span> Keyring</dt><dd>The nodes you choose to trust, under names you choose. Trust applies across the rooms you share, now and later. Each side makes its own decision.</dd></div>
-      <div><dt><span aria-hidden="true">↗</span> Service</dt><dd>Something a node makes reachable in a room: SSH, a local web app, a file transfer. Access depends on the host’s trust and shared room membership.</dd></div>
+      <div><dt><span aria-hidden="true">▤</span> Room</dt><dd>A shared space that lives on its members’ devices. Joining a room does not make you trusted.</dd></div>
+      <div><dt><span aria-hidden="true">◇</span> Node</dt><dd>An identity with its own keys. You are one node; each of your agents is another.</dd></div>
+      <div><dt><span aria-hidden="true">⇄</span> Keyring</dt><dd>The nodes you trust, under names you choose. Each side decides for itself.</dd></div>
+      <div><dt><span aria-hidden="true">↗</span> Service</dt><dd>SSH, a web app or a file that a node shares with a room. Only members its owner trusts reach it.</dd></div>
     </dl>
   </section>
 
-  <section class="principles-section section-pad" aria-labelledby="principles-title">
-    <div><p class="eyebrow">THE INTERFACE SHOULD TELL THE TRUTH.</p><h2 id="principles-title">Quiet by default.<br />Explicit where it matters.</h2></div>
-    <div class="principles-list"><article><h3>Your names. Not claimed names.</h3><p>“ann” is your alias for a fingerprint. An unknown node stays a fingerprint. A message saying “it’s Ann” never becomes an identity.</p></article><article><h3>Connection is not a read receipt.</h3><p>Connected peers are connected peers. The interface must not turn that into “everyone is caught up” or “Ann read your message.”</p></article><article><h3>Consequences before actions.</h3><p>Removing trust cuts future access, including live service sessions. It cannot take back something already read or copied. The interface should say both.</p></article></div>
-  </section>
-
-  <section id="install" class="section-pad install-section" aria-labelledby="install-title"><div class="install-copy"><p class="eyebrow">AVAILABLE NOW · {project.release}</p><h2 id="install-title">One command.<br />The app and the terminal.</h2><p>On an Apple Silicon Mac with macOS 13 or later, the installer puts Vox.app in Applications and links the <code>vox</code> command into it, so the app, the daemon and the command are one version. On x86_64 Linux it installs <code>vox</code>. Any other Mac is refused before anything is downloaded.</p><p class="release-boundary">This guide covers {project.release}. The installer gets the latest stable release from GitHub. The experience above is an illustrative study, not a screenshot of the app.</p><a class="text-link" href="/docs/getting-started/">Start with the release guide <span aria-hidden="true">↗</span></a></div><div class="install-panel"><div class="install-heading"><span>VOX / INSTALL</span><a href={releaseUrl}>{project.release} ↗</a></div><CodeBlock code={installCommand} label="macOS + Linux" /><p class="install-note">Apple Silicon Macs, macOS 13 or later · x86_64 Linux<br />MIT licensed. No account to create.</p><CodeBlock code="vox serve ssh=22" label="Then: share SSH with a room, in one step" /><p class="install-note">It makes a room and prints its address and passphrase. Joining the room does not grant the port: only the members you trust reach it.</p><p class="install-note">Short address. Original GitHub installer. No mirror.</p><div class="install-links"><a href={installerSourceUrl}>Inspect installer</a><a href={releaseUrl}>Release assets</a></div><details class="source-install"><summary>Build from source</summary><p>Uses the release’s pinned Rust toolchain.</p><CodeBlock code={sourceCommand} label="Build from source" /></details></div></section>
-  <div class="source-note"><p>Built in the open. Boundaries included.</p><a href="/security/">Security & limitations ↗</a><a href={project.repository}>Explore the source ↗</a></div>
+  <section id="install" class="section-pad install-section" aria-labelledby="install-title"><div class="install-copy"><p class="eyebrow">INSTALL · {project.release}</p><h2 id="install-title">One command.<br />The app and the terminal.</h2><p>On an Apple Silicon Mac with macOS 13 or later, you get Vox.app and the <code>vox</code> command. On x86_64 Linux, you get <code>vox</code>.</p><a class="text-link" href="/docs/getting-started/">Make your first room <span aria-hidden="true">↗</span></a></div><div class="install-panel"><div class="install-heading"><span>VOX / INSTALL</span><a href={releaseUrl}>{project.release} ↗</a></div><CodeBlock code={installCommand} label="macOS + Linux" /><p class="install-note">Apple Silicon Macs, macOS 13 or later · x86_64 Linux<br />MIT licensed. No account to create.</p><CodeBlock code="vox serve ssh=22" label="Then share SSH with a room" /><p class="install-note">It makes a room and prints its address and passphrase. Only the members you trust reach the port.</p><p class="install-note">The command fetches the installer straight from the GitHub release.</p><div class="install-links"><a href={installerSourceUrl}>Read the installer</a><a href={releaseUrl}>Release files</a></div><details class="source-install"><summary>Build from source</summary><p>Uses the release’s pinned Rust toolchain.</p><CodeBlock code={sourceCommand} label="Build from source" /></details></div></section>
+  <div class="source-note"><p>Open source. Limits stated plainly.</p><a href="/security/">Security and limits ↗</a><a href={project.repository}>Read the source ↗</a></div>
 </BaseLayout>

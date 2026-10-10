@@ -134,3 +134,45 @@ The product is Vox Lucis and the site is `https://voxlucis.us`; the app and comm
 `https://voxlucis.us/`, and `https://voxlux.us/install.sh` answers 301 to
 `https://voxlucis.us/install.sh`. `verify:published` now checks all of these. The server's
 vhosts for the two domains are not yet in `ops/apache/`; the committed file is the old one.
+
+## v0.4.1 update — 2026-10-09
+
+The site now describes the published `v0.4.1` (tag `3aba3913c`, milestone 7). Every claim comes
+from its release notes, the manual it ships (`docs/manual/` at the tag, which is also `main`) and
+the released `vox` binary's help (`Vox.app/Contents/Helpers/vox` from the release, SHA-256
+`1266658a…c7d29d55`, run with a scratch home, data and config directory). The installer was run
+into a scratch home; no live room or agent session was run for the site.
+
+| Website claim | Source |
+| --- | --- |
+| Vox is now Vox Lucis; the app stays Vox, the command `vox` | Release notes, The name (#585) |
+| Each release opens the previous one's data with nothing lost; v0.4.0 and v0.4.1 interoperate | Release notes, Your data across upgrades (#580), Security (#581) |
+| The installer installs the skill pack; `vox agent skill --install` installs or refreshes it by hand; edited files are kept and named. `vox update` is not claimed: in v0.4.1 it leaves no harness with the pack (to be fixed in v0.4.2) | `vox agent skill --help`; `install.sh` v0.4.1 (23,490 bytes, `a87ef19a…1ebab9e2`) |
+| `vox uninstall` removes what Vox installed, keeps nodes; `--dry-run` | Release notes (#588); `vox uninstall --help` |
+| A repo tied to no room asks once; `vox room join … --bind`; `vox agent room --none` | Release notes (#587); `vox room join --help`, `vox agent room --help` |
+| First run in the app; Keep Running from the menu; Settings (⌘,); times and replies; Sign Out | Release notes, The macOS app; `vox node signout --help`; manual `app.md` |
+| The LAN helper is asked for only when the switch is on; Remove the LAN Helper | Release notes (#573, #578) |
+| Four ticks under each service, in every client and `vox service list` | Release notes, Services (#640) |
+| Trusting from the app grants read only; drive via `vox trust drive` | Release notes, Trust; `vox trust --help` |
+| The identity exchange's defences, proven on the wire | Release notes, Security (#581) |
+
+## v0.4.3 rewrite — 2026-10-10
+
+The decider's direction: succinct, why-to-use first, present tense, no version history, no prior
+names; only the installer names the version. Copy written with the copywriting skill, edited with
+the copy-editing skill's seven sweeps, then a last omit-needless-words pass. Every claim comes
+from the v0.4.3 release notes, the `vox` CLI source at the tag (`crates/vox-tui/src/cli.rs`,
+`room_cli.rs`) and its ADRs. No binary was run and no screenshot of the app was taken.
+
+| Website claim | Source |
+| --- | --- |
+| Encrypted end to end, classical + post-quantum (X25519/ML-KEM-768, Ed25519/ML-DSA-65); every key exchange and signature uses both | ADR-003 |
+| Each new key travels to each trusted member in a fresh post-quantum session | ADR-030 D-1; v0.4.3 notes (#652–#661, #676) |
+| No account; rooms live on members' devices; anchors are user-run, hold no room keys | ADR-001, ADR-012; `vox serve --help` |
+| Agents split work, claim, hand off; delivery at turn start per client | `vox room` help; `agent_hook.rs`, `wake.rs` |
+| Sessions: read + drive members type, interrupt, stop, approve, answer, send files | ADR-029; `vox trust drive/read` in `cli.rs` |
+| `vox setup` names each node; a repo binds to a room, with subfolders and worktrees; Vox asks until it is bound | v0.4.3 notes (#666, #671); `vox room join --bind` |
+| `--task/--project/--milestone`, `vox room read --tag` | v0.4.3 notes (#636); `cli.rs` |
+| Keyring changes take the passphrase at a terminal or in the app's prompt, never a file or the environment | `room_cli.rs` no-terminal refusal; the app's prompt (#593) |
+| The sketch's room list: newest first, time, sender, preview, a stronger badge when something waits on you | v0.4.3 notes, The app (#683) |
+| Vox names what a service is missing instead of "connection failed" | v0.4.1 notes, Services (#640) |

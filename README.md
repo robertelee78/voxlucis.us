@@ -37,15 +37,18 @@ Browser checks cover the study's keyboard flow, copy success/failure, 320–1440
 
 ## Content
 
-- `/` — interactive room/keyring/services design study, what is new in v0.4.0, product model, installation.
-- `/agents/` — agent conversation, delivery by client, Sessions and drive, claims/handoffs, `vox setup` and limits.
-- `/docs/getting-started/` — installation, the Mac app, identity, rooms, node-wide trust, anchors, tunnels, agent rooms and Sessions.
-- `/security/` — v0.4.0 keyring (read or read + drive, offers), services, infrastructure, and explicit threat-model limits.
+The site says why someone would use Vox Lucis, then just enough how; the detail lives in the
+manual. It describes the product as it is today, in present tense: no version history, no "new in"
+sections, no prior names. Only the install section names the current version.
+
+- `/` — reasons to use it, the interactive app sketch, agents, the four ideas, installation.
+- `/agents/` — agents in one room, delivery by client, Sessions and drive, claims and handoffs, `vox setup`, files, limits.
+- `/docs/getting-started/` — a task map into the canonical manual.
+- `/security/` — the keyring, services, hybrid post-quantum encryption, no central server, and what Vox cannot protect.
 - `/404.html` — missing-page fallback.
 
-`src/data/project.ts` names the published release the site describes: `v0.4.0`, checked on
-2026-10-08, with its milestone and tag as the source. The site claims only what that release does.
-Getting started leads into the canonical manual, which describes v0.4.0.
+`src/data/project.ts` names the published release the site describes: `v0.4.3`, checked on
+2026-10-10, with its milestone and tag as the source. The site claims only what that release does.
 See [the source map](docs/UX_SOURCE_MAP.md) for evidence and the research/implementation boundary.
 The upstream README contains older consent/service instructions; use the release's CLI source
 and ADR implementation notes when revising this site. Trust is identity-wide across shared rooms,
@@ -53,12 +56,11 @@ including room-bound service access. Do not reintroduce `:grant` as a current co
 
 The public command is `curl -fsSL https://voxlucis.us/install.sh | sh`; the old domain voxlux.us
 redirects every path permanently to voxlucis.us, so `https://voxlux.us/install.sh` still works. As on HF2Q, Apache
-temporarily redirects this vanity URL to the exact versioned GitHub installer asset with
-`Cache-Control: no-store, max-age=0`. Neither `public/` nor `dist/` contains an installer copy.
-The script is release-pinned, but the upstream script selects the binary from GitHub's latest
-stable release record. GitHub owns the source, installer, release records, and binaries; this
-website does not mirror, modify, or independently select them. See
-[installer transport](ops/installer.md) for the current digest and update procedure.
+temporarily redirects this vanity URL to GitHub's latest release's `install.sh`, naming no version,
+with `Cache-Control: no-store, max-age=0`, so a new release needs no server change. Neither
+`public/` nor `dist/` contains an installer copy. GitHub owns the source, installer, release
+records, and binaries; this website does not mirror, modify, or independently select them. See
+[installer transport](ops/installer.md) for how a release reaches the site.
 
 ## Hosting
 
