@@ -40,4 +40,4 @@ assert.equal(missing.status, 404, 'unknown route retains HTTP 404');
 assert.equal(hash(Buffer.from(await missing.arrayBuffer())), hash(await readFile(path.join(root, '404.html'))), 'custom 404 is the tested page');
 console.log(`Published verification: ${artifacts.length} matching files, ${moved.length + 1} redirects to the canonical host, and the custom 404.`);
 const installer = await verifyInstallerTransport();
-console.log(`PASS installer: non-cached temporary redirect to ${installer.url}; ${installer.size} bytes; SHA-256 ${installer.sha256}. Script downloaded, never executed.`);
+console.log(`PASS installer: non-cached temporary redirect to GitHub's latest, ${installer.url} (${installer.tag}, the release the site describes); ${installer.size} bytes; SHA-256 ${installer.sha256}. Script downloaded, never executed.`);

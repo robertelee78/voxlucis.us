@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 import { readdir, readFile, stat } from 'node:fs/promises';
 import path from 'node:path';
-import { installCommand, installerSourceUrl } from '../src/data/project.ts';
+import { project, installCommand, installerSourceUrl } from '../src/data/project.ts';
 import { verifyInstallerConfig } from './installer-transport.mjs';
 
 const root = path.resolve('dist');
@@ -75,7 +75,7 @@ for (const panel of ['room', 'keyring', 'services']) {
   assert.ok(home.includes(`aria-controls="view-${panel}"`), `${panel} control names its panel`);
 }
 assert.ok(home.includes('not a live Vox connection'), 'the study is not represented as a live client');
-assert.ok(home.includes('/releases/tag/v0.4.1'), 'the home page links the release it describes');
+assert.ok(home.includes(`/releases/tag/${project.release}`), 'the home page links the release it describes');
 assert.doesNotMatch(home, /data-consent-demo|network-diagram/u, 'superseded draft is not in the artifact');
 assert.ok(!files.some(file => /(?:^|\/)(?:\.env|\.git|node_modules|src|package\.json)/u.test(file)), 'only public output is built');
 console.log(`Verified ${pages.length} HTML pages, ${links} local asset/link targets, page metadata, and static output boundaries.`);

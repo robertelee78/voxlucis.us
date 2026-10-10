@@ -53,12 +53,11 @@ including room-bound service access. Do not reintroduce `:grant` as a current co
 
 The public command is `curl -fsSL https://voxlucis.us/install.sh | sh`; the old domain voxlux.us
 redirects every path permanently to voxlucis.us, so `https://voxlux.us/install.sh` still works. As on HF2Q, Apache
-temporarily redirects this vanity URL to the exact versioned GitHub installer asset with
-`Cache-Control: no-store, max-age=0`. Neither `public/` nor `dist/` contains an installer copy.
-The script is release-pinned, but the upstream script selects the binary from GitHub's latest
-stable release record. GitHub owns the source, installer, release records, and binaries; this
-website does not mirror, modify, or independently select them. See
-[installer transport](ops/installer.md) for the current digest and update procedure.
+temporarily redirects this vanity URL to GitHub's latest release's `install.sh`, naming no version,
+with `Cache-Control: no-store, max-age=0`, so a new release needs no server change. Neither
+`public/` nor `dist/` contains an installer copy. GitHub owns the source, installer, release
+records, and binaries; this website does not mirror, modify, or independently select them. See
+[installer transport](ops/installer.md) for how a release reaches the site.
 
 ## Hosting
 
