@@ -7,10 +7,10 @@ const pages = await getCollection('manual');
 // Published fragment names remain useful. Instructions themselves live only in Vox.
 const tasks = [
   ['install', '1. Install Vox', 'install', 'One command installs the Mac app and terminal client, or the Linux terminal client. Check the installed version before continuing.'],
-  ['identity', '2. Set up your personal identity', 'first-room', 'Choose your personal node and compare full fingerprints. Keep personal and agent identities separate.'],
-  ['first-room', '3. Create or join a room', 'first-room', 'Follow the complete two-person walkthrough: share the actual room link, exchange trust and read each other’s messages. Directly reachable peers need no anchor.'],
+  ['trust', '2. Choose your trust arrangement', 'keyring', 'For your own machines, enroll the computers together first (recommended), with approval on both ends. To connect with someone else or grant only one node access, choose individual node trust instead.', 'my-computers'],
+  ['identity', '3. Set up your personal identity', 'first-room', 'Choose your personal node and keep it separate from agent identities. Enrolled computers apply their managed-node policy as nodes become Ready; individual trust remains the alternative.'],
+  ['first-room', '4. Create or join a room', 'first-room', 'Use the actual room link and read a message in both directions. Computer enrollment grants no room membership. Follow the individual-trust steps only when you chose that path. Directly reachable peers need no anchor.'],
   ['anchors', 'When the peers cannot reach each other directly', 'services', 'Use an anchor you operate or trust. Save it with the room so its actual invitation carries the connection information; a machine-wide anchor entry alone does not change a room link.', 'when-an-anchor-is-needed'],
-  ['trust', '4. Choose how your devices trust each other', 'keyring', 'Enroll computers with approval on both ends, or approve individual nodes. Computer policy and room membership are separate choices.', 'my-computers'],
   ['agents', '5. Connect agents to the repository’s room', 'agents', 'Set up each harness, bind the repository and verify an actual room reply. Each session works in one room; Codex waits for its next ordinary turn.', 'set-up-a-machine'],
   ['app', 'Find your way around the Mac app', 'app', 'See setup, rooms, the keyring, computer enrollment and the Session controls in their actual UI.'],
   ['sessions', 'Follow, drive and pause a Session', 'sessions', 'Read private activity with drive access, handle approvals, inspect pending attention and load older pages.'],
@@ -23,6 +23,6 @@ const tasks = [
 });
 ---
 <BaseLayout title="Get started — Vox Lucis" description="Install Vox, make your first room, decide who to trust, and bring in your agents. Follow the complete canonical walkthrough, then connect computers and agents." path="/docs/getting-started/">
-  <header class="section-pad page-heading"><p class="eyebrow"><span>GET STARTED</span> THE VOX MANUAL</p><h1>From installation<br /><em>to your first shared room.</em></h1><p class="lede">Start with the numbered steps. Each opens the maintained Vox manual, with actual commands and UI guidance. Add an anchor only when your peers need one. <a href="/docs/manual/">Browse the full manual</a>.</p></header>
+  <header class="section-pad page-heading"><p class="eyebrow"><span>GET STARTED</span> THE VOX MANUAL</p><h1>From installation<br /><em>to your first shared room.</em></h1><p class="lede">Start with the numbered steps. For your own computers, choose computer enrollment before following any individual-node trust steps. Each link opens the maintained manual with actual commands and UI guidance. Add an anchor only when your peers need one. <a href="/docs/manual/">Browse the full manual</a>.</p></header>
   <div class="section-pad manual-task-map">{tasks.map(({ anchor, title, description, page, href }) => <section id={anchor}><h2>{title}</h2><p>{description}</p><a href={href}>{page.data.title} <span aria-hidden="true">&nbsp;→</span></a></section>)}</div>
 </BaseLayout>
