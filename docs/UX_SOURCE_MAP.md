@@ -176,3 +176,29 @@ from the v0.4.3 release notes, the `vox` CLI source at the tag (`crates/vox-tui/
 | Keyring changes take the passphrase at a terminal or in the app's prompt, never a file or the environment | `room_cli.rs` no-terminal refusal; the app's prompt (#593) |
 | The sketch's room list: newest first, time, sender, preview, a stronger badge when something waits on you | v0.4.3 notes, The app (#683) |
 | Vox names what a service is missing instead of "connection failed" | v0.4.1 notes, Services (#640) |
+
+
+## v0.4.5 website preparation — 2026-10-15
+
+Product reference: annotated `v0.4.5` candidate `c97c1a7e183d1443beb1c3738d75097c543c2a7c`.
+Publication of these pages is held until the GitHub Release exists and the exact static artifact
+is accepted. The canonical manual remains owned by Vox #421 and is resolved once per build;
+its final immutable revision is recorded in the artifact's provenance, not pinned in site source.
+Website work: [#8](https://github.com/robertelee78/voxlucis.us/issues/8).
+
+| Updated website claim | Source in the product reference |
+| --- | --- |
+| A node can belong to multiple rooms; a Session receives its bound room's news | ADR-020 §6.15 RA-4; `agent_room.rs`, `agent_hook.rs`; ADR-029 repository binding |
+| Ordinary room attention reaches eligible Claude Code/OpenCode sessions; Codex waits for its next ordinary turn | ADR-020 §6.15 RA-2–RA-6; `wake.rs`, native admission in `agent_hook.rs`, OpenCode server/TUI plugins |
+| Pending states distinguish notice, delivered context and observed answers; only drive-authorized Session readers see them | ADR-020 §6.15 RA-7–RA-9; `Sessions.swift`, `session_cli.rs` |
+| Session tabs, paged history and Pause/Resume behavior | ADR-033; `Sessions.swift`, `session_cli.rs`; ADR-020 PA-4 and RA-9 |
+| Setup authorizes a harness node; installation's light hook is not complete node/room setup; OpenCode needs both plugins | ADR-031; `setup.rs` `install_light_hooks`/`Wiring::install_hook`, `agent_setup.rs` |
+| Local aliases override presented names; fingerprints identify nodes | ADR-028; `docs/manual/keyring.md`; presented-name implementation #796 |
+| Computer enrollment is approved on both ends; managed read, selected-personal drive, removal and individual alternative | ADR-028 computer-trust contract; `docs/manual/keyring.md` “My computers”; #724/#799 |
+| Joining a room is distinct from trust; directly reachable peers need no anchor; room anchor set is explicit | ADR-012 N-1–N-8; `cli.rs` `CreateRoomArgs`/`RoomAnchorChange`; `docs/manual/services.md` |
+| Service sketch reports a running proxy, not verified browser configuration; SSH uses its normal account/config | `service_reach.rs`; #744 accepted printed-command changes |
+
+The getting-started route remains a task map into the canonical manual, preserving old fragments.
+No duplicated manual, new browser framework, binary execution or agent/model run is added here.
+The existing browser journey's literals change only with the displayed setup and SSH commands.
+The installer redirect and its implementation are unchanged.

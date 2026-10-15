@@ -30,8 +30,7 @@ The default preview URL is `http://127.0.0.1:4322`; set `VOX_TEST_URL` to test a
 Use `npm run preview -- --host 127.0.0.1 --port 4322` for that default.
 
 `npm run verify` checks Astro/TypeScript, tests the installer redirect contract, builds the complete static output, and checks every
-local page, asset link, and fragment target. No build-time network request is required after
-dependencies are installed. Production contains no analytics, third-party fonts, or remote scripts.
+local page, asset link, and fragment target. Building fetches the canonical manual from GitHub at one resolved revision. Production contains no analytics, third-party fonts, or remote scripts.
 Browser checks cover the study's keyboard flow, copy success/failure, 320–1440px layouts,
 200% text, all five routes, agent setup expansion/copying, reduced motion, and no-JavaScript fallbacks.
 
@@ -47,11 +46,11 @@ sections, no prior names. Only the install section names the current version.
 - `/security/` — the keyring, services, hybrid post-quantum encryption, no central server, and what Vox cannot protect.
 - `/404.html` — missing-page fallback.
 
-`src/data/project.ts` names the published release the site describes: `v0.4.3`, checked on
-2026-10-10, with its milestone and tag as the source. The site claims only what that release does.
+`src/data/project.ts` names the published release the site describes: `v0.4.5`, reviewed on
+2026-10-15, with its milestone and tag as the source. The site claims only what that release does.
 See [the source map](docs/UX_SOURCE_MAP.md) for evidence and the research/implementation boundary.
-The upstream README contains older consent/service instructions; use the release's CLI source
-and ADR implementation notes when revising this site. Trust is identity-wide across shared rooms,
+Use the canonical manual, release CLI source
+and accepted ADR implementation notes when revising this site. Trust is identity-wide across shared rooms,
 including room-bound service access. Do not reintroduce `:grant` as a current command.
 
 The public command is `curl -fsSL https://voxlucis.us/install.sh | sh`; the old domain voxlux.us

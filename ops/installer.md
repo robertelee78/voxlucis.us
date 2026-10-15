@@ -18,9 +18,9 @@ or change Vox's updater.
 
 ## The release the site describes
 
-`src/data/project.ts` names the release the site's words describe (`release`, now `v0.4.1`,
-reviewed 2026-10-09). The pages show it from there: the home page's "new in", the install section,
-the release links and the agents and security pages. Nothing in the installer path depends on it.
+`src/data/project.ts` names the release the site's words describe (`release` and `reviewed`). The install
+section and release/source links use it. Nothing in the installer path depends on it. Prepare a new version on an isolated branch, then publish only
+after that GitHub Release exists and the website artifact is accepted.
 
 Per release, with no root step:
 
@@ -61,6 +61,6 @@ installs `vox`. It also installs the agent skill pack for every harness present
 `voxlucis.us.conf` `36f72d9c…98ac5`, `voxlux.us.conf` `449b8846…b7ee6`):
 
 - `voxlucis.us.conf`: the site, from `/opt/voxlucis.us/dist`, with the installer selector. The
-  only difference from the server's copy is that selector: here GitHub's latest installer, on the
-  server v0.4.0's until the one-time change to the latest selector is installed.
+  latest-release selector was installed during the v0.4.1 publication; a new release needs no
+  vhost change.
 - `voxlux.us.conf`: the old domain, every path a 301 to the same path on `https://voxlucis.us`.
