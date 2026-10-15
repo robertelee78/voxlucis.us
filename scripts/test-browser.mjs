@@ -99,11 +99,11 @@ try {
   await evaluate(`Object.defineProperty(navigator.clipboard, 'writeText', { configurable: true, value: async text => { window.__copiedExample = text; } })`);
   await click('#view-services [data-copy]');
   await waitFor(`document.querySelector('#copy-status').textContent.includes('copied')`);
-  check('copy passes only the example command and announces success', await evaluate(`window.__copiedExample === 'ssh robertGPT@nas-ssh.nas.family.vox' && document.querySelector('#view-services .copy-button span').textContent === 'Copied'`));
+  check('copy passes only the example command and announces success', await evaluate(`window.__copiedExample === 'ssh nas-ssh.nas.family.vox' && document.querySelector('#view-services .copy-button span').textContent === 'Copied'`));
   await evaluate(`Object.defineProperty(navigator.clipboard, 'writeText', { configurable: true, value: async () => { throw new DOMException('Denied', 'NotAllowedError'); } })`);
   await click('#view-services [data-copy]');
   await waitFor(`document.querySelector('#copy-status').textContent.includes('unavailable')`);
-  check('denied clipboard selects printed text and never claims copied', await evaluate(`getSelection().toString() === 'ssh robertGPT@nas-ssh.nas.family.vox' && document.querySelector('#view-services .copy-button span').textContent === 'Select text'`));
+  check('denied clipboard selects printed text and never claims copied', await evaluate(`getSelection().toString() === 'ssh nas-ssh.nas.family.vox' && document.querySelector('#view-services .copy-button span').textContent === 'Select text'`));
 
   for (const width of [1440, 1024, 768, 390, 320]) {
     await viewport(width);
@@ -121,16 +121,16 @@ try {
   await viewport(1440);
   check('Agents navigation identifies the current page', await evaluate(`document.querySelector('#primary-nav a[aria-current="page"]').textContent === 'Agents'`));
   check('agent guide names its one-command setup', await evaluate(`document.querySelector('#setup .callout').textContent.includes('vox setup') && document.querySelector('#setup a[href="/docs/getting-started/#agents"]') !== null`));
-  check('agent guide states Codex delivery, addressing and claim limits', await evaluate(`document.querySelector('#delivery').textContent.includes('does not interrupt Codex') && document.querySelector('#delivery').textContent.includes('Addressing is not a private message') && document.querySelector('#workflow').textContent.includes('messages, not hard locks')`));
+  check('agent guide states Codex delivery, addressing and claim limits', await evaluate(`document.querySelector('#delivery').textContent.includes('Waiting for next Codex turn') && document.querySelector('#delivery').textContent.includes('does not start an automatic idle turn') && document.querySelector('#delivery').textContent.includes('Addressing is not a private message') && document.querySelector('#workflow').textContent.includes('coordination message, not a file lock')`));
   await evaluate(`document.querySelector('.agent-setup summary').focus()`);
   // Native details activation also needs the keypress event; use the browser's full key sequence.
   cli('press', 'Enter');
   await waitFor(`document.querySelector('.agent-setup').open`);
-  check('agent setup expands with the keyboard', await evaluate(`document.querySelector('.agent-setup').open && document.querySelector('.agent-setup pre').textContent.includes('vox agent plugin claude --node claude-mbp')`));
+  check('agent setup expands with the keyboard', await evaluate(`document.querySelector('.agent-setup').open && document.querySelector('.agent-setup pre').textContent.includes('vox agent setup claude --node claude-mbp')`));
   await evaluate(`Object.defineProperty(navigator.clipboard, 'writeText', { configurable: true, value: async text => { window.__copiedSetup = text; } })`);
   await click('.agent-setup [data-copy]');
   await waitFor(`document.querySelector('#copy-status').textContent.includes('copied')`);
-  check('agent setup copies the printed node-bound configuration commands', await evaluate(`window.__copiedSetup === 'vox node create claude-mbp\\nvox agent plugin claude --node claude-mbp\\nvox agent skill --install'`));
+  check('agent setup copies the printed node-bound setup command', await evaluate(`window.__copiedSetup === 'vox agent setup claude --node claude-mbp'`));
   for (const width of [1440, 768, 390, 320]) {
     await viewport(width);
     await evaluate(`document.querySelectorAll('.agent-setup').forEach(el => el.open = true)`);
